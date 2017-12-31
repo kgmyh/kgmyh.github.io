@@ -1,0 +1,7 @@
+	{% if paginator.previous_page %}
+      <a href="{{ paginator.previous_page_path | prepend: site.baseurl }}" class="button__outline">Prev</a> 
+    {% endif %}  
+	<span style="display:inline-block;position:relative;font-family:'Noto Sans Korean',Open font-size:1rem;line-height:1rem;font-weight:400;padding:.7rem 1rem;border:0;border-radius:4px;margin-left:2rem;margin-right:2rem;margin-bottom:.5rem;">{% if paginator.page < 10 %}{{0}}{% elsif paginator.page>10 and paginator.page<100%}{{00}}{% endif%}{{paginator.page}}</span>
+	{% if paginator.next_page %}
+      <a href="{{ paginator.next_page_path | prepend: site.baseurl }}" class="button__outline">Next</a>
+    {% endif %}  

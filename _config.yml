@@ -1,0 +1,57 @@
+# long-haul 테마에서 포크 : https://github.com/brianmaierjr/long-haul
+
+encoding: UTF-8
+
+#site 데이터
+title: kgmyh tutorial blog   #블로그 타이틀
+description: Java, Python 튜토리얼 번역   #블로그설명
+url: https://kgmyh.github.io    #기본(base) URL
+baseurl: ""
+keywords: 'java,python,spring,web,javascript,blog'
+author:
+  name: 김성환
+  job_title: Instructor
+  location: Seoul Korea
+  email: kgmyh@naver.com
+  social_links:
+      name: github
+      url: https://github.com/kgmyh
+
+page_url: "/blog/page"
+permalink: /blog/:year/:month/:day/:title/   # 포스트되는 파일 호출 경로 여기서는 /blog/연도/월/일/제목 형식으로 경로를 만들겠다.
+
+# 마크다운 설정 - kramdown(사용) 설정 - auto_id_prefix : id 에 heading- 을 붙인다.
+markdown: kramdown
+kramdown:
+  auto_id_prefix: 'heading-'
+  smart_quotes: ["apos", "apos", "quot", "quot"]
+  toc_levels: 1..3
+
+highlighter: rouge
+plugins: [jekyll-paginate]
+
+#paing attribute
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# 카테고리,태그 링크 추가 1. 아래 navigation에 추가. 2. /blog 경로 만들고 거기에 https://github.com/codinfox/codinfox-lanyon /blog의 html 카피 후 layout: 을 page에서 default로 변경
+navigation:
+ - title: Home
+   url: /index.html
+ - title: Category      
+   url: /menu/categories/
+ - title: Tag
+   url: /menu/tags/
+ - title: About
+   url: /about
+
+#sass 설정
+sass:
+  sass_dir: _sass
+  style: compressed
+
+#댓글, 구글 통계설정
+disqus: 
+  shortname: kgmyh-tutorial-blog
+google_analytics: "UA-110944102-1"
+

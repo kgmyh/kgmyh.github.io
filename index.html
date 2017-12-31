@@ -1,0 +1,18 @@
+---
+layout: default
+title: kgmyh tutorial blog
+---
+<div class="home" id="home">
+  <h1 class="pageTitle">글 목록</h1>
+  <ul class="posts noList">
+    {% for post in paginator.posts %}
+      <li>
+        <span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
+        <h3><a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></h3>
+        <p style="font-size:1rem">{% if post.description %}{{ post.description }}{% else %}{{ post.excerpt | strip_html }}{% endif %}</p>
+      </li>
+    {% endfor %}
+  </ul>
+  <!-- Pagination links -->
+  {% include paging.html %}   
+</div>
