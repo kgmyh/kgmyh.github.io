@@ -403,7 +403,7 @@ Hello World!
 우리는 제품을 완벽하게 실행할 수있는 실행가능 jars(Executable Jar)를 생성하는 것으로 이 예제를 마무리하겠다. 실행가능 jars ("fat jars" 라고도 한다.)는 컴파일된 클래스들과 어플리케이션을 실행하는데 필요한 모든 의존 jar들을 포함하고 있는 압축파일이다.
 
 >**<font color="brown" size="2.5em">Executable Jars와 자바</font>**  
->자바는 jar에 포함된 jar파일들을 로드하는 표준방법을 제공하지 않는다. (jar 파일들 그 자신이 jar안에 포함되어져 있을 수 있다.) 만약 자체포함된(self-contained) 어플리케이션 배포를 생각하는 경우 이것은 문제가 발생할 소지가 있다.
+>자바는 jar파일에 포함된 jar파일들을 로드하는 표준방법을 제공하지 않는다. (jar 파일들 그 자신이 jar안에 포함되어져 있을 수 있다.) 만약 Jar에 포함된(self-contained) 어플리케이션 배포를 생각하는 경우 문제가 발생할 소지가 있다.
 >
 >이 문제를 해결하기 위해 많은 개발자들은 "uber" jars를 사용한다. uber는 어플리케이션의 모든 의존 라이브러리의 클래스들을 하나의 압축으로 묶는다. 이 방식의 단점은 어플리케이션안에 어느 라이브러리들이 있는지 확인하기가 어렵다는 것이다. 이것도 만약 여러 jar들에서 같은 이름의 파일이 있는 경우 문제가 될 수있다.
 >
@@ -420,7 +420,7 @@ Hello World!
 	</plugins>
 </build>
 ```
->`spring-boot-starter-parent` POM 은 `repackage` 골을 설정에 연결하기 위해 `<executions>`를 퐇함한다. 만약 부모 POM을 사용하지 않으면, 그 설정을 직접 선언해야 한다. 상세사항은 [플러그인문서](https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/maven-plugin//usage.html)를 확인하시오.
+>`spring-boot-starter-parent` POM 은 `repackage` 골을 설정에 연결하기 위해 `<executions>`를 포함한다. 만약 부모 POM을 사용하지 않으면, 그 설정을 직접 선언해야 한다. 상세사항은 [플러그인문서](https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/maven-plugin//usage.html)를 확인하시오.
 
 커맨드 라인에서 `pom.xml` 파일을 저장하고 `mvn package`를 실행한다.
 ```

@@ -17,9 +17,21 @@ published: true
 {:toc .toc}
 
 # 1. 타임리프 소개
-## 1.1 타임리프는 무엇인가
+## _1.1 타임리프는 무엇인가_
 타임리프는 웹과 독립실행 환경 모두에 적용할 수 있는 최신의 서버사이트 자바 템플릿 엔진으로 HTML, XML, Javascript, Css와 일반 Text 까지도 처리할 수 있다.
 
+## 1.2 _타임리프가 처리하는 템플릿의 종류는 무엇인가?_
+타임리프는 6종류의 템플릿들을 처리한다. 각각을 *Template Mode* 라 부른다.
+* HTML
+* XML
+* TEXT
+* JAVASCRIPT
+* CSS
+* RAW
+
+_마크업_ 템플릿 모드 (`HTML`과 `XML`)와 3개의 _텍스트_ 템플릿 모드 (`TEXT`, `JAVASCRIPT` 그리고 `CSS`) 와 _조작할 수없는_<sub>no-op</sub> 템플릿 모드 (`RAW`)가 있다.
+
+`HTML` 템플릿 모드는 HTML5, HTML4, XHTML을 포함한 모든 HTML을 처리한다. 어떠한 검사나 마크업형식에 만게 작성했는지에 대한 문서체크<sub>well-formedness</sub>가 실행되지 않으며 출력될 템플릿 코드 구조는 최대로 가능한 규모가 존중될 것이다.
 
 ## 4.6 리터럴(상수) 값들
 ### _Text Literals_
