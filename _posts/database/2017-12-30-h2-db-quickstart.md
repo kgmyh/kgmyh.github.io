@@ -6,7 +6,7 @@ description: H2 Database 빠른 시작 번역문서
 categories: [database]
 tags: [h2, quickstart, database]
 comments: true
-published: true
+published: false
 ---
 [원문](http://www.h2database.com/html/quickstart.html)
 
