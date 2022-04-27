@@ -1,0 +1,117 @@
+I"0%<h1 id="heading-pathlib---객체-지향-파일-시스템-경로-관리">pathlib - 객체 지향 파일 시스템 경로 관리</h1>
+<ul>
+  <li><a href="https://docs.python.org/ko/3/library/pathlib.html">Document</a></li>
+  <li>python 3.4에서 추가됨</li>
+</ul>
+
+<p>파이썬에서 경로를 다룰때는 os 모듈을 사용했다. os 모듈에서는 다양한 경로다루는 함수들을 제공하여 함수형으로 코드를 작성했다. <br />
+pathlib는 경로를 객체지향 방식으로 다룬다.<br />
+Path 객체에 경로를 넣고 메소드를 이용해 그 경로에 대한 여러가지 작업들을 처리한다.  또 연산자가 재정의(Overloading)되어 있어 연산자를 이용해 경로를 편하게 처리할 수 있다.  <br />
+다음은 경로가 있는지 여부를 확인하는 코드를 os모듈과 pathlib 모듈을 비교한 것이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">src_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s">"c:\src"</span>
+<span class="c1"># os
+</span><span class="n">flag</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">src_path</span><span class="si">}</span><span class="s"> 경로가 있는지 여부: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+<span class="c1"># pathlib
+</span><span class="n">path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="p">.</span><span class="n">Path</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">src_path</span><span class="si">}</span><span class="s"> 경로가 있는지 여부: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+<ul>
+  <li>os 모듈은 함수들을 제공하기 때문에 원하는 기능을 제공하는 함수에 경로를 문자열로 전달해서 처리한다.</li>
+  <li>pathlib는 객체지향 방식이므로 Path객체에 경로를 넣고 메소드를 이용해 객체에 저장된 경로를 다룬다.</li>
+</ul>
+
+<h2 id="heading-주요">주요</h2>
+<h3 id="heading-path-클래스">Path 클래스</h3>
+<ul>
+  <li>경로를 attribute로 가지며 경로와 관련된 다양한 기능을 제공한다.</li>
+  <li>객체 생성시 경로를 넣어 준다.
+    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">root_path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="p">.</span><span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s">"c:\src"</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h4 id="heading-path의-attribute">Path의 Attribute</h4>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s">"C:\src\test.py"</span><span class="p">)</span>
+<span class="n">dir_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s">"C:\src\sub_dir"</span><span class="p">)</span>
+
+<span class="c1"># parts 속성 - 경로 구성 요소를 튜플로 묶어서 반환
+</span><span class="k">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">.</span><span class="n">parts</span><span class="p">)</span> <span class="c1"># ('C:\\', 'src', 'test.py')
+</span><span class="k">print</span><span class="p">(</span><span class="n">dir_path</span><span class="p">.</span><span class="n">parts</span><span class="p">)</span>  <span class="c1"># ('C:\\', 'src', 'sub_dir')
+</span>
+<span class="c1"># name 속성 - 경로 구성요소의 마지막 부분을 문자열로 반환
+</span><span class="k">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">.</span><span class="n">name</span><span class="p">)</span> <span class="c1"># test.py
+</span><span class="k">print</span><span class="p">(</span><span class="n">dir_path</span><span class="p">.</span><span class="n">name</span><span class="p">)</span>  <span class="c1"># sub_dir
+</span>
+<span class="c1"># suffix 속성 - 경로가 파일일 경우 확장자를 반환
+</span><span class="k">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">.</span><span class="n">suffix</span><span class="p">)</span> <span class="c1"># .py
+</span><span class="k">print</span><span class="p">(</span><span class="n">dir_path</span><span class="p">.</span><span class="n">suffix</span><span class="p">)</span>  <span class="c1"># None (확장자가 없으면 None반환)
+</span>
+<span class="c1"># stem 속성 - 마지막 구성요소에서 확장자를 뺀 마지막 부분을 반환
+</span><span class="k">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">.</span><span class="n">stem</span><span class="p">)</span>   <span class="c1"># test (파일일 경우 확장자를 뺀 파일명을 반환)
+</span><span class="k">print</span><span class="p">(</span><span class="n">dir_path</span><span class="p">.</span><span class="n">stem</span><span class="p">)</span>    <span class="c1"># sub_dir (디렉토리일 경우 디렉토리명을 반환)
+</span></code></pre></div></div>
+
+<h4 id="heading-path의-메소드">Path의 메소드</h4>
+<ul>
+  <li><strong>cwd()</strong>
+    <ul>
+      <li>현재 디렉토리 조회</li>
+      <li>class method</li>
+    </ul>
+  </li>
+  <li><strong>exists()</strong>
+    <ul>
+      <li>경로의 자원의 존재 여부를 bool 타입으로 반환</li>
+    </ul>
+  </li>
+  <li>
+    <p><strong>glob()</strong></p>
+  </li>
+  <li><strong>is_dir()</strong>
+    <ul>
+      <li>경로가 Directory의 경로이면 True, 파일이거나 없는 경로이면 False를 반환</li>
+    </ul>
+  </li>
+  <li><strong>is_file()</strong>
+    <ul>
+      <li>경로가 File의 경로이면 True, 디렉토리거나 없는 경로이면 False를 반환</li>
+    </ul>
+  </li>
+  <li><strong>mkdir(mode=511, parents=False, exist_ok=False)</strong>
+    <ul>
+      <li>Path 경로에 새 디렉토리를 만든다.</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">print</span><span class="p">(</span><span class="n">Path</span><span class="p">.</span><span class="n">cwd</span><span class="p">())</span>
+<span class="n">Path</span><span class="p">(</span><span class="sa">r</span><span class="s">"c:\src\test.py"</span><span class="p">).</span><span class="n">exists</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h3 id="heading-경로-합치기">경로 합치기</h3>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">root_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s">'root_dir'</span><span class="p">)</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">root_path</span> <span class="o">/</span> <span class="s">"sub_dir1"</span> <span class="o">/</span> <span class="s">"sub_dir2"</span> <span class="o">/</span> <span class="s">"a.txt"</span>
+<span class="k">print</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
+
+<span class="c1"># 기존 os 모듈
+</span><span class="n">root_path</span> <span class="o">=</span> <span class="s">'root_dir'</span>
+<span class="n">file_path</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="n">root_path</span><span class="p">,</span> <span class="s">'sub_dir1'</span><span class="p">,</span> <span class="s">'sub_dir2'</span><span class="p">,</span> <span class="s">'a.txt'</span><span class="p">)</span>
+<span class="p">[</span><span class="n">out</span><span class="p">]</span>
+<span class="n">root_dir</span>\<span class="n">sub_dir1</span>\<span class="n">sub_dir2</span>\<span class="n">a</span><span class="p">.</span><span class="n">txt</span>
+</code></pre></div></div>
+<ul>
+  <li>/ 연산자를 이용해 쉽게 합칠 수 있다.</li>
+</ul>
+:ET

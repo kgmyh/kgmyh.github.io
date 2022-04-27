@@ -1,0 +1,275 @@
+I"�N<p><a href="http://www.mybatis.org/spring-boot-starter/mybatis-spring-boot-autoconfigure/">원문</a></p>
+
+<ul class="toc" id="markdown-toc">
+  <li><a href="#heading-소개" id="markdown-toc-heading-소개">소개</a>    <ul>
+      <li><a href="#heading-마이바티스-스프링-부트-스타터란-무엇인가" id="markdown-toc-heading-마이바티스-스프링-부트-스타터란-무엇인가">마이바티스-스프링-부트-스타터란 무엇인가</a></li>
+      <li><a href="#heading-요구사항" id="markdown-toc-heading-요구사항">요구사항</a></li>
+      <li><a href="#heading-인스톨" id="markdown-toc-heading-인스톨">인스톨</a></li>
+      <li><a href="#heading-빠른-설정" id="markdown-toc-heading-빠른-설정">빠른 설정</a></li>
+      <li><a href="#heading-고급-스캐닝" id="markdown-toc-heading-고급-스캐닝">고급 스캐닝</a></li>
+      <li><a href="#heading-sqlsession-사용하기" id="markdown-toc-heading-sqlsession-사용하기">SqlSession 사용하기</a></li>
+      <li><a href="#heading-환경설정" id="markdown-toc-heading-환경설정">환경설정</a></li>
+      <li><a href="#heading-configurationcustomizer--사용하기" id="markdown-toc-heading-configurationcustomizer--사용하기">ConfigurationCustomizer  사용하기</a></li>
+      <li><a href="#heading-마이바티스-컴포넌트들-탐지하기" id="markdown-toc-heading-마이바티스-컴포넌트들-탐지하기">마이바티스 컴포넌트들 탐지하기.</a></li>
+      <li><a href="#heading-샘플들-실행하기" id="markdown-toc-heading-샘플들-실행하기">샘플들 실행하기</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="heading-소개">소개</h1>
+<hr />
+<h2 id="heading-마이바티스-스프링-부트-스타터란-무엇인가">마이바티스-스프링-부트-스타터란 무엇인가</h2>
+
+<p>마이바티스-스프링-부트-스타터는 <a href="http://projects.spring.io/spring-boot/">스프링 부트</a>에 마이바티스를 빠르게 빌드할 수 있게 도와준다.</p>
+
+<p>이 모듈을 사용하면 다음을 얻을 수 있다</p>
+<ul>
+  <li>독립실행 어플리케이션 빌드</li>
+  <li>항상 만들어야하는 상용구문<sub>boilerplate</sub>을 거의 0에 가깝게 줄일 수 있다</li>
+  <li>XML설정을 줄일 수 있다</li>
+</ul>
+
+<h2 id="heading-요구사항">요구사항</h2>
+<p>마이바티스-스프링부트-스타터는 Java 6 이상 버전을 요구한다. 그리고 다음과 같은 버전의 마이바티스-스프링과 스프링 부트를 요구한다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>마이바티스-스프링-부트-스타터</th>
+      <th><a href="http://www.mybatis.org/spring/index.html#Requirements">마이바티스-스프링</a></th>
+      <th>스프링부트</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.3.x (1.3.1)</td>
+      <td>1.3 이상</td>
+      <td>1.5 이상</td>
+    </tr>
+    <tr>
+      <td>1.2.x (1.2.1)</td>
+      <td>1.3 이상</td>
+      <td>1.4 이상</td>
+    </tr>
+    <tr>
+      <td>1.1.x (1.1.1)</td>
+      <td>1.3 이상</td>
+      <td>1.3 이상</td>
+    </tr>
+    <tr>
+      <td>1.0.x (1.0.2)</td>
+      <td>1.2 이상</td>
+      <td>1.3 이상</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="heading-인스톨">인스톨</h2>
+
+<p>마이바티스-스프링-부트-스타터 모듈을 사용하기 위해서는  <code class="language-plaintext highlighter-rouge">mybatis-spring-boot-autoconfigure.jar</code> 파일과 그것의 의존라이브러리들(<code class="language-plaintext highlighter-rouge">mybatis.jar</code>,<code class="language-plaintext highlighter-rouge">mybatis-spring.jar</code> 등)을 클래스 패스상에 포함 시키면 된다.</p>
+
+<p>만약 메이븐을 사용한다면 다음 의존관계 설정을 <code class="language-plaintext highlighter-rouge">pom.xml</code>에 포함시킨다.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependency&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>org.mybatis.spring.boot<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>mybatis-spring-boot-starter<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;version&gt;</span>2.0.0-SNAPSHOT<span class="nt">&lt;/version&gt;</span> 
+<span class="nt">&lt;/dependency&gt;</span>
+</code></pre></div></div>
+<p>만약 그레이들을 사용한다면 <code class="language-plaintext highlighter-rouge">build.gradle</code>에 다음을 추가 한다</p>
+<div class="language-groovy highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dependencies</span><span class="o">{</span> 
+  <span class="n">compile</span><span class="o">(</span><span class="s2">"org.mybatis.spring.boot:mybatis-spring-boot-starter:2.0.0-SNAPSHOT"</span><span class="o">)</span> 
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="heading-빠른-설정">빠른 설정</h2>
+
+<p>이미 알고 있듯이, 마이바티스를 스프링과 함께 사용하기 위해서는 최소한 한개의 <code class="language-plaintext highlighter-rouge">SqlSessionFactory</code> 와 최소한 한개의 매퍼 인터페이스가 필요하다.</p>
+
+<p>마이바티스-스프링-부트-스타터는 다음과 같은일을 처리한다.</p>
+
+<ul>
+  <li>존재하는 <code class="language-plaintext highlighter-rouge">DataSource</code> 자동감지</li>
+  <li><code class="language-plaintext highlighter-rouge">SqlSeessionFactoryBean</code>을 사용해서 해당 데이터소스를 전달하는 <code class="language-plaintext highlighter-rouge">SqlSessionFactory</code>의 객체를 생성하고 등록한다.</li>
+  <li><code class="language-plaintext highlighter-rouge">SqlSessionFactory</code>을 이용해 <code class="language-plaintext highlighter-rouge">SqlSessionTemplate</code>의 객체를 생성하고 등록한다.</li>
+  <li>매퍼들을 자동스캔한 뒤 스캔된 것들을 <code class="language-plaintext highlighter-rouge">SqlSessionTemplate</code>에 연결하고 Spring Context에 등록해서 당신의 빈들에 주입할 수 있게 해준다.</li>
+</ul>
+
+<p>다음과 같은 매퍼가 있다고 가정한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Mapper</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">CityMapper</span> <span class="o">{</span>
+
+    <span class="nd">@Select</span><span class="o">(</span><span class="s">"SELECT * FROM CITY WHERE state = #{state}"</span><span class="o">)</span>
+    <span class="nc">City</span> <span class="nf">findByState</span><span class="o">(</span><span class="nd">@Param</span><span class="o">(</span><span class="s">"state"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">state</span><span class="o">);</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>당신은 그냥 평범한 스프링 부트 어플리케이션을 생성하고 다음 코드와 같이 매퍼가 주입되게 한다.(스프링 4.3 이상에서만 가능)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">SampleMybatisApplication</span> <span class="kd">implements</span> <span class="nc">CommandLineRunner</span> <span class="o">{</span>
+   <span class="kd">private</span> <span class="kd">final</span> <span class="nc">CityMapper</span> <span class="n">cityMapper</span><span class="o">;</span>
+
+   <span class="kd">public</span> <span class="nf">SampleMybatisApplication</span><span class="o">(</span><span class="nc">CityMapper</span> <span class="n">cityMapper</span><span class="o">)</span> <span class="o">{</span>
+       <span class="k">this</span><span class="o">.</span><span class="na">cityMapper</span> <span class="o">=</span> <span class="n">cityMapper</span><span class="o">;</span>
+   <span class="o">}</span>
+
+   <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+       <span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">SampleMybatisApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(</span><span class="nc">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Exception</span> <span class="o">{</span>
+       <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">cityMapper</span><span class="o">.</span><span class="na">findByState</span><span class="o">(</span><span class="s">"CA"</span><span class="o">));</span>
+   <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>당신이 할일은 이게 전부다. 이제 당신의 어플리케이션은 스프링 부트 어플리케이션으로 실행될 수 있다.</p>
+
+<h2 id="heading-고급-스캐닝">고급 스캐닝</h2>
+<p>기본적으로 마이바티스-스프링-부트-스타터는 <code class="language-plaintext highlighter-rouge">@Mapper</code> 어노테이션이 표시된 매퍼들을 검색한다.</p>
+
+<p>만약 매퍼 스캔을 위해 당신이 정의한 어노테이션이나 마커 인터페이스<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>을 사용하기 원한다면 <code class="language-plaintext highlighter-rouge">@MapperScan</code> 어노테이션을 사용하면 된다. 그것에 대한 자세한 것은 <a href="http://www.mybatis.org/spring/mappers.html#scan">마이바티스-스프링 참조페이지</a>에서 확인하시오.</p>
+
+<p>마이바티스-스프링-부트-스타터는 스프링 컨텍스트에서 <code class="language-plaintext highlighter-rouge">MapperFactoryBean</code>을 하나라도 찾으면 매퍼 스캔작업을 시작하지 않기 때문에 만약 당신이 스캔작업이 완전히 멈추길 바라면 당신의 매퍼들을 <code class="language-plaintext highlighter-rouge">@Bean</code> 메소드를 이용해 명시적으로 등록해야만 한다.</p>
+
+<h2 id="heading-sqlsession-사용하기">SqlSession 사용하기</h2>
+<p><code class="language-plaintext highlighter-rouge">SqlSessionTemplate</code>의 객체는 생성된 뒤 스프링 컨택스트에 등록되기 때문에 당신의 빈에 주입된 마이바티스 API를 다음 코드처럼 사용할 수 있다. (스프링 4.3 이상버전에서만 사용가능)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CityDao</span> <span class="o">{</span>
+
+   <span class="kd">private</span> <span class="kd">final</span> <span class="nc">SqlSession</span> <span class="n">sqlSession</span><span class="o">;</span>
+
+   <span class="kd">public</span> <span class="nf">CityDao</span><span class="o">(</span><span class="nc">SqlSession</span> <span class="n">sqlSession</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">sqlSession</span> <span class="o">=</span> <span class="n">sqlSession</span><span class="o">;</span>
+   <span class="o">}</span>
+
+   <span class="kd">public</span> <span class="nc">City</span> <span class="nf">selectCityById</span><span class="o">(</span><span class="kt">long</span> <span class="n">id</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">sqlSession</span><span class="o">.</span><span class="na">selectOne</span><span class="o">(</span><span class="s">"selectCityById"</span><span class="o">,</span> <span class="n">id</span><span class="o">);</span>
+   <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="heading-환경설정">환경설정</h2>
+<p>다른 스프링 부트 어플리케이션 처럼 마이바티스-스프링-부트-어플리케이션의 환경설정 인자들<sub>parameter</sub>들도 <code class="language-plaintext highlighter-rouge">application.properties</code>(또는 <code class="language-plaintext highlighter-rouge">application.yml</code>)에 작성한다.</p>
+
+<p>마이바티스는 프라퍼티들에 <code class="language-plaintext highlighter-rouge">mybatis</code> 접두어를 사용한다.</p>
+
+<p>프라퍼티들은 다음과 같다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>프라퍼티</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">config-location</code></td>
+      <td>마이바티스 xml 설정파일의 위치</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">check-config-location</code></td>
+      <td>마이바티스 xml 설정 파일이 존재 여부 체크를 실행할지 말지를 표시한다.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">mapper-location</code></td>
+      <td>매퍼 xml 설정파일의 위치</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type-aliases-package</code></td>
+      <td>Type Aliases를 찾기위한 패키지들. (여러 패키지 지정시 구분 기호로 <code class="language-plaintext highlighter-rouge">, ; \t \n</code> 사용)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">type-handlers-package</code></td>
+      <td>Type Handler들을 찾기 위한 패키지들 (여러 패키지 지정시 구분 기호로 <code class="language-plaintext highlighter-rouge">, ; \t \n</code> 사용)</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">executor-type</code></td>
+      <td>실행자 타입 : <code class="language-plaintext highlighter-rouge">SIMPLE</code>, <code class="language-plaintext highlighter-rouge">REUSE</code>,<code class="language-plaintext highlighter-rouge">BATCH</code>.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">configuration-properties</code></td>
+      <td>마이바티스 설정을 위한 외부에 작성한 프라퍼티들. <br />명시된 프라퍼티들은 마이바티스 설정파일이나 매퍼 파일에서 자리표시자<sub>placeholder</sub>를 이용해 사용된다.<br />더 자세한 것은 <a href="http://www.mybatis.org/mybatis-3/configuration.html#properties">마이바티스 참조 페이지</a>를 보시오</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">configuration</code></td>
+      <td>마이바티스 <code class="language-plaintext highlighter-rouge">Configuration</code> 빈. 사용가능한 프라퍼티들은 <a href="http://www.mybatis.org/mybatis-3/configuration.html#settings">마이바티스 참조 페이지</a>를 보시오. <br />주의: 이 설정은 <code class="language-plaintext highlighter-rouge">config-location</code> 과 동시에 사용할 수 없다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>예:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>#application.properties
+mybatis.type-aliases-package=com.example.domain.model
+mybatis.type-handlers-package=com.example.typehandler
+mybatis.configuration.map-underscore-to-camel-case=true
+mybatis.configuration.default-fetch-size=100
+mybatis.configuration.default-statement-timeout=30
+...
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># application.yml
+mybatis:
+    type-aliases-package: com.example.domain.model
+    type-handlers-package: com.example.typehandler
+    configuration:
+        map-underscore-to-camel-case: true
+        default-fetch-size: 100
+        default-statement-timeout: 30
+...
+</code></pre></div></div>
+<h2 id="heading-configurationcustomizer--사용하기">ConfigurationCustomizer  사용하기</h2>
+<p>마이바티스-스프링-부트-스타터는 자동설정으로 등록된 마이바티스 환경설정을 Java Config를 사용해 커스터 마이징 할 수 있다. 마이바티스-스프링-부트-스타터는 <code class="language-plaintext highlighter-rouge">ConfigurationCustomizer</code> 를 implements한 빈을 자동으로 찾아서 마이바티스 환경설정을 커스터마이징하는 메소드를 호출한다. (1.2.1 이상 버전부터 사용가능)</p>
+
+<p>예:</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//@Configuration class</span>
+<span class="nd">@Bean</span>
+<span class="nc">ConfigurationCustomizer</span> <span class="nf">mybatisConfigurationCustomizer</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nf">ConfigurationCustomizer</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">void</span> <span class="nf">customize</span><span class="o">(</span><span class="nc">Configuration</span> <span class="n">configuration</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// customize ...</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="heading-마이바티스-컴포넌트들-탐지하기">마이바티스 컴포넌트들 탐지하기.</h2>
+<p>마이바티스-스프링-부트-스타터는 마이바티스에서 제공하는 다음의 인터페이스를 구현한<sub>implements</sub> 빈들을 탐지한다.</p>
+<ul>
+  <li><a href="http://www.mybatis.org/mybatis-3/configuration.html#plugins">Interceptor</a></li>
+  <li><a href="http://www.mybatis.org/mybatis-3/configuration.html#databaseIdProvider">DatabaseIdProvider</a></li>
+</ul>
+
+<h2 id="heading-샘플들-실행하기">샘플들 실행하기</h2>
+<p>이 프로젝트는 두개의 샘플을 제공한다.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>샘플</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/mybatis/spring-boot-starter/tree/master/mybatis-spring-boot-samples/mybatis-spring-boot-sample-annotation">첫번째 샘플</a></td>
+      <td>한개의 매퍼와 그 매퍼가 주입되는 하나의 빈으로 구성된 가장 간단한 시나리오를 보여주는 샘플.<br />이 샘플을 위의 빠른 설정 부분에서 보았었다.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/mybatis/spring-boot-starter/tree/master/mybatis-spring-boot-samples/mybatis-spring-boot-sample-xml">두번째 샘플</a></td>
+      <td>xml 파일을 이용한 매퍼와 <code class="language-plaintext highlighter-rouge">SqlSessionTemplate</code>을 사용하는 Dao를 사용하는 방법을 보여준다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Marker Interface는 java.io.Serializable 처럼 특정 클래스의 역할을 표시하기 위한 목적의 Interface이다. (역자) <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

@@ -3,7 +3,7 @@ layout: post
 comments: false
 title: "Beautiful Soup 4.4.0 문서 번역"
 author: "김성환"
-categories: [Python]
+categories: [Python-크롤링]
 tags: [Python, Beautiful Soup]
 published: false
 ---

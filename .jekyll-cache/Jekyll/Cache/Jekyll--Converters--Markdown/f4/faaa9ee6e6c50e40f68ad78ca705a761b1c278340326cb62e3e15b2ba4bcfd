@@ -1,0 +1,25 @@
+I"Q
+<p>참고; https://brownbears.tistory.com/415</p>
+<h1 id="heading-pathlib---객체-지향-파일-시스템-경로">pathlib - 객체 지향 파일 시스템 경로</h1>
+<ul>
+  <li><a href="https://docs.python.org/ko/3/library/pathlib.html">Document</a></li>
+  <li>python 3.4에서 추가됨</li>
+</ul>
+
+<p>파이썬에서 경로를 다룰때는 os 모듈을 사용했다. os 모듈에서는 다양한 경로다루는 함수들을 제공하여 함수형으로 코드를 작성했다. pathlib는 경로를 객체지향 방식으로 다룬다.<br />
+Path 객체에 경로를 넣고 메소드를 이용해 그 경로에 대한 여러가지 작업들을 처리한다.  또 연산자 재정의(Overloading)을 이용해 경로를 처리할 수 있다. 다음은 경로가 있는지 여부를 확인하는 코드를 os모듈과 pathlib 모듈을 비교한 것이다.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pathlib</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">src_path</span> <span class="o">=</span> <span class="sa">r</span><span class="s">"c:\src"</span>
+<span class="c1"># os
+</span><span class="n">flag</span> <span class="o">=</span> <span class="n">os</span><span class="p">.</span><span class="n">path</span><span class="p">.</span><span class="n">exists</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">src_path</span><span class="si">}</span><span class="s"> 경로가 있는지 여부: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+
+<span class="c1"># pathlib
+</span><span class="n">path</span> <span class="o">=</span> <span class="n">pathlib</span><span class="p">.</span><span class="n">Path</span><span class="p">(</span><span class="n">src_path</span><span class="p">)</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="n">p</span><span class="p">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'</span><span class="si">{</span><span class="n">src_path</span><span class="si">}</span><span class="s"> 경로가 있는지 여부: </span><span class="si">{</span><span class="n">flag</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+</code></pre></div></div>
+:ET

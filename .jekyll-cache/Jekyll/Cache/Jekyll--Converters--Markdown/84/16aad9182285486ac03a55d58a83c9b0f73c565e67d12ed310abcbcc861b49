@@ -1,0 +1,458 @@
+I"j�<p>버전 : 2.0.0.M7<br />
+저자: 
+Phillip Webb, Dave Syer, Josh Long, Stéphane Nicoll, Rob Winch, Andy Wilkinson, Marcel Overdijk, Christian Dupuis, Sébastien Deleuze, Michael Simons, Vedran Pavić, Jay Bryant
+번역: 김성환</p>
+
+<p><strong>Copyright ⓒ 2012-2017</strong></p>
+
+<p>Copies of this document may be made for your own use and for distribution to others, provided that you do not charge any fee for such copies and further provided that each copy contains this Copyright Notice, whether distributed in print or electronically.</p>
+
+<p><a href="https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-features">원본</a></p>
+
+<ul class="toc" id="markdown-toc">
+  <li><a href="#heading-part4-스프링부트-기능들" id="markdown-toc-heading-part4-스프링부트-기능들">Part4 스프링부트 기능들</a>    <ul>
+      <li><a href="#heading-23-springapplication" id="markdown-toc-heading-23-springapplication">23. SpringApplication</a>        <ul>
+          <li><a href="#heading-231-시작-실패" id="markdown-toc-heading-231-시작-실패">23.1 시작 실패</a></li>
+          <li><a href="#heading-232-banner를-내가-원하는-대로-바꾸기" id="markdown-toc-heading-232-banner를-내가-원하는-대로-바꾸기">23.2 Banner를 내가 원하는 대로 바꾸기</a></li>
+          <li><a href="#heading-233-springapplication-커스터마이징하기" id="markdown-toc-heading-233-springapplication-커스터마이징하기">23.3 SpringApplication 커스터마이징하기</a></li>
+          <li><a href="#heading-234-fluent-builder-api" id="markdown-toc-heading-234-fluent-builder-api">23.4 Fluent Builder API</a></li>
+          <li><a href="#heading-235-어플리케이션-이벤트와-리스너들" id="markdown-toc-heading-235-어플리케이션-이벤트와-리스너들">23.5 어플리케이션 이벤트와 리스너들</a></li>
+          <li><a href="#heading-236-웹-환경" id="markdown-toc-heading-236-웹-환경">23.6 웹 환경</a></li>
+          <li><a href="#heading-237-어플리케이션-인수들-접근하기" id="markdown-toc-heading-237-어플리케이션-인수들-접근하기">23.7 어플리케이션 인수들 접근하기.</a></li>
+          <li><a href="#heading-238-applicationrunner나-commandlinerunner-사용" id="markdown-toc-heading-238-applicationrunner나-commandlinerunner-사용">23.8 ApplicationRunner나 CommandLineRunner 사용</a></li>
+          <li><a href="#heading-239-어플리케이션-종료" id="markdown-toc-heading-239-어플리케이션-종료">23.9 어플리케이션 종료</a></li>
+          <li><a href="#heading-2310-관리자-기능" id="markdown-toc-heading-2310-관리자-기능">23.10 관리자 기능</a></li>
+        </ul>
+      </li>
+      <li><a href="#heading-24-외부설정" id="markdown-toc-heading-24-외부설정">24. 외부설정</a>        <ul>
+          <li><a href="#heading-241-임의의-값들-설정-random-values" id="markdown-toc-heading-241-임의의-값들-설정-random-values">24.1 임의의 값들 설정 (Random Values)</a></li>
+        </ul>
+      </li>
+      <li><a href="#heading-242-command-line-설정-접근" id="markdown-toc-heading-242-command-line-설정-접근">24.2 Command Line 설정 접근</a>        <ul>
+          <li><a href="#heading-243-어플리케이션-프라퍼티-파일들" id="markdown-toc-heading-243-어플리케이션-프라퍼티-파일들">24.3 어플리케이션 프라퍼티 파일들</a></li>
+          <li><a href="#heading-244-프로파일-관련-프라퍼티들" id="markdown-toc-heading-244-프로파일-관련-프라퍼티들">24.4 프로파일 관련 프라퍼티들</a></li>
+          <li><a href="#heading-245-프라퍼티들에서-플레이스홀더들" id="markdown-toc-heading-245-프라퍼티들에서-플레이스홀더들">24.5 프라퍼티들에서 플레이스홀더들</a></li>
+          <li><a href="#heading-246-properties-대신-yaml-사용" id="markdown-toc-heading-246-properties-대신-yaml-사용">24.6 Properties 대신 YAML 사용</a></li>
+          <li><a href="#heading-2461" id="markdown-toc-heading-2461">24.6.1</a></li>
+          <li><a href="#heading-247-type-safe-설정-프라퍼티들" id="markdown-toc-heading-247-type-safe-설정-프라퍼티들">24.7 Type-safe 설정 프라퍼티들</a></li>
+          <li><a href="#heading-264-로그레벨들" id="markdown-toc-heading-264-로그레벨들">26.4 로그레벨들</a></li>
+          <li><a href="#heading-464-사용자-정의-스타터-만들기" id="markdown-toc-heading-464-사용자-정의-스타터-만들기">46.4 사용자 정의 스타터 만들기</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="heading-part4-스프링부트-기능들">Part4 스프링부트 기능들</h1>
+<p>이번 섹션에서는 스프링 부트의 좀더 상세한 사항에 대해 볼 것이다. 여기서 사용하고 커스터마이징하길 원하는 주요 기능들에 대해 배울 것이다.  "<a href="/blog/2017/12/04/spring-boot-chapter02/#heading-part2-시작하기">Part2 시작하기</a>"나 "<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-part3-스프링-부트-사용하기">Part3 스프링부트 사용하기</a>"를 아직 읽지 않았다면 기초지식을 얻기 위해 먼저 읽는 것이 좋을 것이다.</p>
+
+<h2 id="heading-23-springapplication">23. SpringApplication</h2>
+<p><code class="language-plaintext highlighter-rouge">SpringApplication</code> 클래스는 스프링 어플리케이션을 <code class="language-plaintext highlighter-rouge">main()</code>을 사용해 시동하기 위한 편리한 방법들을 제공한다. 대부분의 상황에서, static 메소드인 <code class="language-plaintext highlighter-rouge">SpringApplication.run()</code> 메소드를  다음과 같이 사용한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+	<span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">MySpringConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>어플리케이션이 시작하면 다음과 비슷한 결과를 보게 될 것이다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::   v2.0.0.BUILD-SNAPSHOT
+
+2013-07-31 00:08:16.117  INFO 56603 --- [           main] o.s.b.s.app.SampleApplication            : Starting SampleApplication v0.1.0 on mycomputer with PID 56603 (/apps/myapp.jar started by pwebb)
+2013-07-31 00:08:16.166  INFO 56603 --- [           main] ationConfigServletWebServerApplicationContext : Refreshing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@6e5a8246: startup date [Wed Jul 31 00:08:16 PDT 2013]; root of context hierarchy
+2014-03-04 13:09:54.912  INFO 41370 --- [           main] .t.TomcatServletWebServerFactory : Server initialized with port: 8080
+2014-03-04 13:09:56.501  INFO 41370 --- [           main] o.s.b.s.app.SampleApplication            : Started SampleApplication in 2.992 seconds (JVM running for 3.658)
+</code></pre></div></div>
+<p>기본적으로 <code class="language-plaintext highlighter-rouge">INFO</code> 로그 메세지가 보여지는데 거기에는 어플리케이션을 실행한 사용자와 같은 관련된 시작 상세 메세지들이 포함되 있다.</p>
+
+<h3 id="heading-231-시작-실패">23.1 시작 실패</h3>
+<p>만약 시작을 실패하면, 등록된 <code class="language-plaintext highlighter-rouge">FailureAnalyzers</code><sub>실패 분석기</sub> 가 그 실패 이유를 알려주는 에러메세지와 그 문제를 해결하기 위한 구체적인 동작을 제공한다. 예를 들어 <code class="language-plaintext highlighter-rouge">8080</code> 포트번호로 웹어플리케이션을 실행하는데 그 포트번호가 이미 사용중인 경우 다음과 비슷한 메세지를 보게될 것이다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Embedded servlet container failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+</code></pre></div></div>
+<blockquote>
+  <p>스프링 부트는 많은 <code class="language-plaintext highlighter-rouge">FailureAnalyzer</code> 구현를 제공하며 <a href="/blog/2017/12/19/spring-boot-chapter09/#heading-721-사용자-정의-failureanalyzer-생성하기">당신이 만들어 추가할 수도 있다.</a>
+발생한 예외를 처리할 실패분석기(FailureAnalyzer)가 없는 경우에도 무슨 문제가 일어났는지 알려 주는 조건보고서를 내보낼 수있다. 그렇게 하기 위해 <code class="language-plaintext highlighter-rouge">org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener</code>을 위해 <a href="#heading-24-외부설정"><code class="language-plaintext highlighter-rouge">debug</code> 프라퍼티</a> 또는 <a href="#heading-264-로그레벨들"><code class="language-plaintext highlighter-rouge">DEBUG</code> 로깅</a>을 활성화해야 한다.</p>
+</blockquote>
+
+<p>예를들어 <code class="language-plaintext highlighter-rouge">java -jar</code>를 사용해 어플리케이션을 실행하는 경우 다음과 같이 <code class="language-plaintext highlighter-rouge">debug</code> 프라퍼티를 활성화 할 수있다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java -jar myproject-0.0.1-SNAPSHOT.jar --debug
+</code></pre></div></div>
+<h3 id="heading-232-banner를-내가-원하는-대로-바꾸기">23.2 Banner를 내가 원하는 대로 바꾸기</h3>
+<p>시작할때 출력되는 배너를 클래스 패스상에 <code class="language-plaintext highlighter-rouge">banner.txt</code>파일을 추가하거나 <code class="language-plaintext highlighter-rouge">spring.banner.location</code> 프라퍼티에 그 파일의 위치를 설정해서 바꿀 수 있다. 만약 파일의 인코딩이 UTF-8이 아니면 <code class="language-plaintext highlighter-rouge">spring.banner.charset</code> 설정을 해야 한다. 텍스트 파일 이외에도 <code class="language-plaintext highlighter-rouge">banner.gif</code>, <code class="language-plaintext highlighter-rouge">banner.jpg</code> 또는 <code class="language-plaintext highlighter-rouge">banner.png</code> 이미지 파일을 클래스 피스상에 위치하거나 <code class="language-plaintext highlighter-rouge">spring.banner.image.location</code> 프라퍼티 설정을 이용해 추가할 수있다. 이미지들은 ASCII art로 변환되어 text 배너로 출력된다.</p>
+
+<p>banner.txt 파일안에 다음과 같은 플레이스홀더를 사용할 수있다.</p>
+
+<p><strong>표 23.1. 배너에서 사용하는 변수들</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>변수</th>
+      <th>설명</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${application.version}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">MAINFEST.MF</code> 파일에 선언된 어플리케이션의 버전. 예를 들어 <code class="language-plaintext highlighter-rouge">Implementation-Version: 1.0</code> 은 <code class="language-plaintext highlighter-rouge">1.0</code>으로 출력된다.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${application.formatted-version}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">MANIFEST&gt;MF</code>에 선언된 어플리케이션의 버전번호를 보여주기 위한 형식(소괄호로 감싸고 <code class="language-plaintext highlighter-rouge">v</code>를 접두어로 붙인다)으로 보여준다. 예 : <code class="language-plaintext highlighter-rouge">(v1.0)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${spring-boot.version}</code></td>
+      <td>사용하고 있는 스프링 버전. 예: <code class="language-plaintext highlighter-rouge">2.0.0.BUILD-SNAPSHOT</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${spring-boot.formatted-version}</code></td>
+      <td>사용하고 있는 스프링 버전을 보여주기 위한 형식(소괄호로 감싸고 <code class="language-plaintext highlighter-rouge">v</code>를 접두어로 붙인다.)으로 보여준다. 예 : <code class="language-plaintext highlighter-rouge">(v2.0.0.BUILD-SNAPSHOT)</code></td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${Ansi.NAME}</code>(또는 <code class="language-plaintext highlighter-rouge">${AnsiColor.NAME}</code>, <code class="language-plaintext highlighter-rouge">${AnsiBackground.NAME}</code>, <code class="language-plaintext highlighter-rouge">${AnsiStyle.NAME}</code>)</td>
+      <td><code class="language-plaintext highlighter-rouge">NAME</code>은 ANSI 이스케이프코드의 이름이다. 자세한 것은 <code class="language-plaintext highlighter-rouge">[AnsiPropertySource](https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/ansi/AnsiPropertySource.java)</code>를 보시오.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">${application.title}</code></td>
+      <td><code class="language-plaintext highlighter-rouge">MANIFEST.MF</code>에 선언된 어플리케이션 제목. 예를 들어 <code class="language-plaintext highlighter-rouge">Implementation-Title: MyApp</code>은 <code class="language-plaintext highlighter-rouge">MyApp</code>으로 출력된다.</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">SpringApplication.setBanner(…)</code> 메소드를 이용해 프로그램적으로 Banner를 생성할 수있다. <code class="language-plaintext highlighter-rouge">org.springframework.boot.Banner</code> 인터페이스를 상속받고 <code class="language-plaintext highlighter-rouge">printBanner()</code> 메소드를 구현하면된다.</p>
+</blockquote>
+
+<p>또한 <code class="language-plaintext highlighter-rouge">spring.main.banner-mode</code> 프라퍼티를 사용해 배너가 <code class="language-plaintext highlighter-rouge">System.out</code>(<code class="language-plaintext highlighter-rouge">console</code>)로 출력되거나, 설정되 있는 logger(<code class="language-plaintext highlighter-rouge">log</code>)로 전달되거나 또는 생산되지 않도록(<code class="language-plaintext highlighter-rouge">off</code>) 설정할 수있다.</p>
+
+<p>출력된 배너는 <code class="language-plaintext highlighter-rouge">springBootBanner</code> 란 이름의 싱글톤 빈으로 등록된다.</p>
+
+<blockquote>
+  <p>YAML  은 <code class="language-plaintext highlighter-rouge">off</code>가 <code class="language-plaintext highlighter-rouge">false</code>를 의미 하므로 어플리케이션에서 배너를 사용 안하려면 따옴표를 추가해야만 한다.</p>
+  <pre style="background-color:lightgray;font-size:1.1em;color:#7F007F">
+     spring:
+              main:
+                      banner-mode: "off"
+</pre>
+</blockquote>
+
+<h3 id="heading-233-springapplication-커스터마이징하기">23.3 SpringApplication 커스터마이징하기</h3>
+
+<p>만약<code class="language-plaintext highlighter-rouge">SpringApplication</code>의 기본 설정 들이 맘에들지 않으면 로컬객체를 생성해서 커스터마이징해 대신 사용할 수 있다. 예를 들어 배너를 끄고 싶으면 다음과 같이 쓸 수 있다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span> 	
+   <span class="nc">SpringApplication</span> <span class="n">app</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">SpringApplication</span><span class="o">(</span><span class="nc">MySpringConfiguration</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+   <span class="n">app</span><span class="o">.</span><span class="na">setBannerMode</span><span class="o">(</span><span class="nc">Banner</span><span class="o">.</span><span class="na">Mode</span><span class="o">.</span><span class="na">OFF</span><span class="o">);</span> 	
+   <span class="n">app</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">SpringApplication</code>로 전달 되는 생성자 인수들은 스프링 빈들을 위한 설정 소스들 이다. 대부분의 경우 <code class="language-plaintext highlighter-rouge">@Configuration</code> 클래스들을 참조 시키지만 XML설정이나 스캔될 패키지를 참조시킬 수도 있다.</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">SpringApplication</code>는 <code class="language-plaintext highlighter-rouge">application.properties</code>파일을 사용해서 설정 할 수도 있다. 자세한 것은  <a href="#heading-24-외부설정">24. 외부설정</a>를 보시오</p>
+
+<p>설정 옵션들의 전체목록은 <a href="https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/api/org/springframework/boot/SpringApplication.html"><code class="language-plaintext highlighter-rouge">SpringApplication</code> Javadoc</a>을 보시오.</p>
+
+<h3 id="heading-234-fluent-builder-api">23.4 Fluent Builder API</h3>
+<p>만약 계층관계 <code class="language-plaintext highlighter-rouge">ApplicationContext</code> <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>를 생성해야 하거나 'fluent' builder<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup> API를 사용하는 것을 선호한다면 <code class="language-plaintext highlighter-rouge">SpringApplicationBuilder</code>를 사용할 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">SpringApplicationBuilder</code>는 여러 메소드 호출을 연결해서 호출<sub>method chain</sub> 할 수있게 하고 계층관계를 만들수 있는 <code class="language-plaintext highlighter-rouge">parent</code>와 <code class="language-plaintext highlighter-rouge">child</code> 메소드를 포함하고 있다.<br />
+예)</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">new</span> <span class="nc">SpringApplicationBuilder</span><span class="o">()</span>
+               <span class="o">.</span><span class="na">sources</span><span class="o">(</span><span class="nc">Parent</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+               <span class="o">.</span><span class="na">child</span><span class="o">(</span><span class="nc">Application</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+               <span class="o">.</span><span class="na">bannerMode</span><span class="o">(</span><span class="nc">Banner</span><span class="o">.</span><span class="na">Mode</span><span class="o">.</span><span class="na">OFF</span><span class="o">)</span>
+               <span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="n">args</span><span class="o">);</span>
+</code></pre></div></div>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">ApplicationContext</code> 계층관계를 생성할 때 몇몇 제약이 있다. 예를 들어 웹 컴포넌트는 <strong>반드시</strong> 자식 context에 포함되 있어야 한다. 그리고 같은 <code class="language-plaintext highlighter-rouge">Environment</code>가 부모와 자식 컨텍스트들 양쪽에서 사용되어야 한다. 자세한 사항은 <a href="https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/api/org/springframework/boot/builder/SpringApplicationBuilder.html"><code class="language-plaintext highlighter-rouge">SpringApplicationBuilder</code> Javadoc</a>을 보시오.</p>
+</blockquote>
+
+<h3 id="heading-235-어플리케이션-이벤트와-리스너들">23.5 어플리케이션 이벤트와 리스너들</h3>
+<p><code class="language-plaintext highlighter-rouge">SpringApplication</code>은 <a href="https://docs.spring.io/spring/docs/5.0.2.RELEASE/javadoc-api/org/springframework/context/event/ContextRefreshedEvent.html"><code class="language-plaintext highlighter-rouge">ContextRefreshedEvent</code></a>와 같은 스프링 프레임워크가 발생시키는 이벤트들과 더불어 몇몇 추가적인  어플리케이션 이벤트들을 발생시킨다.</p>
+<blockquote>
+  <p>몇몇 이벤트들은 <code class="language-plaintext highlighter-rouge">ApplicationContext</code>가 생성되기 전에 발생하기 때문에 리스너를 <code class="language-plaintext highlighter-rouge">@Bean</code>으로 등록할 수없다. 그런 리스너들은 <code class="language-plaintext highlighter-rouge">SpringApplication.addListeners(..)</code>나 <code class="language-plaintext highlighter-rouge">SpringApplicationBuilder.listeners(...)</code> 메소드들을 사용해 등록할 수있다.
+어플리케이션이 생성되는 방식과 관계없이 이 리스너들이 <strong>자동적으로</strong> 등록되도록 하길 원하면, <code class="language-plaintext highlighter-rouge">META-INF/spring.factories</code> 파일을 프로젝트에 추가하고 거기에 리스너(들) <code class="language-plaintext highlighter-rouge">org.springframework.context.ApplicationListener</code> 키값을 사용해 다음과 같이 참조시킨다.</p>
+  <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>org.springframework.context.ApplicationListener=com.example.project.MyListener
+</code></pre></div>  </div>
+</blockquote>
+
+<p>Application 이벤트들은 실행시 다음과 같은 순서대로 발생한다.</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">ApplicationStartingEvent</code>은 실행은 시작했지만 등록된 리스너들과 Initializer들의 등록을 제외한 어떤 것도 진행 되기 전에 전송된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">ApplicationEnvironmentPreparedEvent</code>은 Context에서 사용될 <code class="language-plaintext highlighter-rouge">Environment</code>을 찾았지만 아직 Context가 생성되기 전에 전송된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">ApplicationPreparedEvent</code>은 정의된 빈들이 로딩되고 refresh가 시작되기 바로전에 전송된다.</li>
+  <li><code class="language-plaintext highlighter-rouge">ApplicationReadyEvent </code>는 refresh되고 관련 callback 들이 진행 된 이후에 전송된다. 이 시점은 어플리케이션이 요청에 대해서 서비스할 준비 되었음을 가리킨다.</li>
+  <li><code class="language-plaintext highlighter-rouge">ApplicationFailedEvent</code>은 시작 도중 예외가 발생하면 전송된다.</li>
+</ol>
+
+<blockquote>
+  <p>어플리케이션 이벤트들을 사용할 필요가 없는 경우가 자주있다. 그러나 이벤트들을 알고 있으면 훨씬 편리할 수있다. 내부적으로 스프링 부트는 많은 일들을 처리하기 위해 이벤트들을 사용한다.</p>
+</blockquote>
+
+<p>어플리케이션 이벤트들은 스프링 프레임워크의 이벤트 발생 메카니즘을 사용해 전송된다. 이 메카니즘에서는 자식 컨텍스트의 리스너들에게 발생한 이벤트는 조상 컨텍스트들의 리스너에게도 발생되도록 한다. 이 결과로 만약 어플리케이션이 <code class="language-plaintext highlighter-rouge">SpringApplication</code> 객체의 계층관계를 사용한다면 리스너는 같은 타입의 어플리케이션 이벤트 객체들을 여러개 받게 된다.</p>
+
+<p>리스너가 자신의 컨텍스트에서 발생한 이벤트인지 자식 컨텍스트에서 발생한 이벤트인지를 구별하게 하기 위해, 그것의 어플리케이션 컨텍스트를 주입받아서 이벤트가 발생한 Context와 비교해야 한다. 컨텍스트는 <code class="language-plaintext highlighter-rouge">ApplicationContextAware</code>를 구현하거나 리스너가 빈일 경우 <code class="language-plaintext highlighter-rouge">@Autowired</code>를 사용해서 주입받을 수있다.</p>
+
+<h3 id="heading-236-웹-환경">23.6 웹 환경</h3>
+<p><code class="language-plaintext highlighter-rouge">SpringApplication</code>은 어플리케이션에 맞는 타입의 <code class="language-plaintext highlighter-rouge">ApplicationContext</code>를 생성하기 위해 시도한다. 기본적으로, 웹어플리케이션인지 아닌지를 기반으로  <code class="language-plaintext highlighter-rouge">AnnotationConfigApplicationContext</code>나 <code class="language-plaintext highlighter-rouge">AnnotationConfigServletWebServerApplicationContext</code>가 사용된다</p>
+
+<p><code class="language-plaintext highlighter-rouge">웹 환경</code>인지를 결정하기 위해 사용하는 알고리즘은 꽤 단순하다. (이것은 몇몇 클래스들이 존재하는지에 기초한다.) 만약 기본설정을 재정의하려고 하면 <code class="language-plaintext highlighter-rouge">setWebEnvironment(boolean webEnvironment)</code> 메소드를 사용한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">setApplicationContextClass(...)</code>를 사용해서 사용할 <code class="language-plaintext highlighter-rouge">ApplicationContext</code> 타입을 직접 지정할 수도 있다.</p>
+
+<blockquote>
+  <p>JUnit test에서 <code class="language-plaintext highlighter-rouge">SpringApplication</code>을 사용할 때 종종 <code class="language-plaintext highlighter-rouge">setWebEnvironment(false)</code>를 사용한다.</p>
+</blockquote>
+
+<h3 id="heading-237-어플리케이션-인수들-접근하기">23.7 어플리케이션 인수들 접근하기.</h3>
+<p><code class="language-plaintext highlighter-rouge">SpringApplication.run(...)</code> 을 이용해 전송된 어플리케이션 인수들에 접근하려면 <code class="language-plaintext highlighter-rouge">org.springframework.boot.ApplicationArguments</code> 빈을 주입 받으면 된다. <code class="language-plaintext highlighter-rouge">ApplicationArguments</code> 인터페이스가 인수의 원래 타입인 <code class="language-plaintext highlighter-rouge">String[]</code>의 인수나 그것을 정제한<sub>parsing</sub> <code class="language-plaintext highlighter-rouge">option</code> 과 <code class="language-plaintext highlighter-rouge">non-option</code> 타입의 인수 둘 다로 접근하는 방법을 제공한다. 다음은 그 예제코드다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.boot.*</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.*</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.*</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBean</span> <span class="o">{</span>
+
+	<span class="nd">@Autowired</span>
+	<span class="kd">public</span> <span class="nf">MyBean</span><span class="o">(</span><span class="nc">ApplicationArguments</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="kt">boolean</span> <span class="n">debug</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="na">containsOption</span><span class="o">(</span><span class="s">"debug"</span><span class="o">);</span>
+		<span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">files</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="na">getNonOptionArgs</span><span class="o">();</span>
+		<span class="c1">// if run with "--debug logfile.txt" debug=true, files=["logfile.txt"]</span>
+	<span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<blockquote>
+  <p>스프링 부트는 <code class="language-plaintext highlighter-rouge">CommandLinePropertySource</code>를 스프링 <code class="language-plaintext highlighter-rouge">Environment</code>에 등록할 수있다. 그렇게 하면 <code class="language-plaintext highlighter-rouge">@Value</code> 어노테이션을 사용해 하나의 어플리케이션 인수들을 주입할 수있다.</p>
+</blockquote>
+
+<h3 id="heading-238-applicationrunner나-commandlinerunner-사용">23.8 ApplicationRunner나 CommandLineRunner 사용</h3>
+
+<p>만약 SpringApplication이 시작할 때 특정 코드를 한번 실행 시킬 필요가 있으면 <code class="language-plaintext highlighter-rouge">ApplicationRunner</code> 나 <code class="language-plaintext highlighter-rouge">CommandLineRunner</code> 인터페이스를 implements 할 수 있다.
+두 인터페이스는 같은 방식으로 작동하며 <code class="language-plaintext highlighter-rouge">SpringApplication.run(...)</code> 메소드 실행이 완료되기 직전에 호출 되는 <code class="language-plaintext highlighter-rouge">run</code> 메소드를 하나 제공 한다. 
+<code class="language-plaintext highlighter-rouge">CommandLineRunner</code> 인테페이스는 어플리케이션 인수를 한개의 스트링 배열로 접근해 사용 하는 방법을 제공 하지만 <code class="language-plaintext highlighter-rouge">ApplicationRunner</code>는 이전에 우리가 봤던 <code class="language-plaintext highlighter-rouge">ApplicationArguments</code>인터페이스를 사용한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.boot.*</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.*</span> 
+<span class="nd">@Component</span> 
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBean</span> <span class="kd">implements</span> <span class="nc">CommandLineRunner</span> <span class="o">{</span> 
+   	<span class="kd">public</span> <span class="kt">void</span> <span class="nf">run</span><span class="o">(</span><span class="nc">String</span><span class="o">...</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span> 		
+       <span class="c1">// Do something... 	</span>
+   <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">CommandLineRunner</code>나 <code class="language-plaintext highlighter-rouge">ApplicationRunner</code>빈들을 여러개 정의 하고 그들의 실행 순서를 정의 해야 하는 경우 추가적으로 <code class="language-plaintext highlighter-rouge">org.springframework.core.Ordered</code> 인터페이스를 구현하거나 <code class="language-plaintext highlighter-rouge">org.springframework.core.annotation.Order</code> 어노테이션을 사용할 수 있다.</p>
+
+<h3 id="heading-239-어플리케이션-종료">23.9 어플리케이션 종료</h3>
+<p>각 <code class="language-plaintext highlighter-rouge">SpringApplication</code>은 종료시 <code class="language-plaintext highlighter-rouge">ApplicationContext</code>를 정상적으로 close하는 것을 보장하도록 JVM에 shutdown hook을 등록한다. 모든 표준 스프링 생명주기 콜백들(<code class="language-plaintext highlighter-rouge">DisposableBean</code> 인터페이스나 <code class="language-plaintext highlighter-rouge">@PreDestroy</code>어노테이션)이 사용될 수 있다.</p>
+
+<p>거기에 더해 <code class="language-plaintext highlighter-rouge">SpringApplication.exit()</code>이 호출 될 때 특정 종료코드를 반환하기를 원하면 빈들이 <code class="language-plaintext highlighter-rouge">org.springframework.boot.ExitCodeGenerator</code> 인터페이스를 구현하면 된다. 이 종료코드는  <code class="language-plaintext highlighter-rouge">System.exit()</code>으로 전달되어 <code class="language-plaintext highlighter-rouge">System.exit()</code>의 상태코드로 반환된다. 다음은 그 예이다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@SpringBootApplication</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ExitCodeApplication</span> <span class="o">{</span>
+
+	<span class="nd">@Bean</span>
+	<span class="kd">public</span> <span class="nc">ExitCodeGenerator</span> <span class="nf">exitCodeGenerator</span><span class="o">()</span> <span class="o">{</span>
+		<span class="k">return</span> <span class="o">()</span> <span class="o">-&gt;</span> <span class="mi">42</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+		<span class="nc">System</span><span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="nc">SpringApplication</span>
+				<span class="o">.</span><span class="na">exit</span><span class="o">(</span><span class="nc">SpringApplication</span><span class="o">.</span><span class="na">run</span><span class="o">(</span><span class="nc">ExitCodeApplication</span><span class="o">.</span><span class="na">class</span><span class="o">,</span> <span class="n">args</span><span class="o">)));</span>
+	<span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p>또한 <code class="language-plaintext highlighter-rouge">ExitCodeGenerator</code> 인터페이스는 예외<sub>Exception</sub>에서 구현할 수도 있다. 특정 예외가 발생하면 스프링 부트는 구현된 <code class="language-plaintext highlighter-rouge">getExitCode()</code> 메소드가 제공하는 종료코드를 반환한다.</p>
+
+<h3 id="heading-2310-관리자-기능">23.10 관리자 기능</h3>
+<p><code class="language-plaintext highlighter-rouge">spring.application.admin.enabled</code> 프라퍼티를 사용하면 어플리케이션에 관리자-관련 기능을 활성화 시킬 수 있다. 이것은 <code class="language-plaintext highlighter-rouge">MBeanServer</code> 플랫폼에 <a href="https://github.com/spring-projects/spring-boot/blob/master/spring-boot-project/spring-boot/src/main/java/org/springframework/boot/admin/SpringApplicationAdminMXBean.java"><code class="language-plaintext highlighter-rouge">SpringApplicationAdminMXBean</code></a>을 노출시킨다. 이것을 이용해 스프링 부트 어플리케이션의 관리자 기능을 원격으로 사용할 수있다. 이 기능은 서비스 어떤 랩퍼 구현에도 유용할 수있다.</p>
+<blockquote>
+  <p>만약 어플리케이션이 실행 중인 HTTP 포트번호를 알려면, <code class="language-plaintext highlighter-rouge">local.server.port</code> 키로 프라퍼티를 조회한다.</p>
+  <blockquote>
+    <p>주의 : 이 기능을 활성화 시킬때 MBean이 어플리케이션을 종료<sub>Shutdown</sub>하는 메소드를 노출하므로 주의해야 한다..</p>
+  </blockquote>
+</blockquote>
+
+<h2 id="heading-24-외부설정">24. 외부설정</h2>
+<p>스프링 부트는 환경 설정을 외부에 할 수있게 해서 같은 어플리케이션 코드를 다른 환경에서 사용할 수있게 한다.  외부 환경 설정을 하기 위해 Properties 파일들, YAML 파일들, 환경변수들 그리고 Command-Line 인수들을 사용할 수 있다. 설정된 프라퍼티들은 <code class="language-plaintext highlighter-rouge">@Value</code>를 사용해 직접 빈들에 주입할 수도 있고, 스프링의 <code class="language-plaintext highlighter-rouge">Environment</code> 추상을 통해 접근하거나 <code class="language-plaintext highlighter-rouge">@ConfigurationProperties</code>를 통해 <a href="#heading-247-Type-safe-설정-프라퍼티들">구조화된 객체에 묶일 수도 있다.</a></p>
+
+<p>스프링 부트는 값들을 합리적으로 재정의하도록 설계한 매우 특별한 <code class="language-plaintext highlighter-rouge">PropertySource</code> 순서를 사용한다. 프라퍼티들은 다음 순서대로 적용된다.</p>
+<ol>
+  <li>홈 디렉토리상의 <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-204-전역설정들">Devtools의 전역설정 프라퍼티</a>(devtools가 실행 중일때 <code class="language-plaintext highlighter-rouge">~/.spring-boot-devtools.properties</code>)</li>
+  <li>테스트 할 때 <code class="language-plaintext highlighter-rouge">@TestPropertySource</code> 어노테이션</li>
+  <li>테스트 할 때 <code class="language-plaintext highlighter-rouge">@SpringBootTest#properties</code> 어노테이션</li>
+  <li>Command-Line 인수</li>
+  <li><code class="language-plaintext highlighter-rouge">SPRING_APPLICATION_JSON</code>에 설정된 프라퍼티들(환경변수나 시스템 프라퍼티 내장된 inline JSON)</li>
+  <li><code class="language-plaintext highlighter-rouge">ServletConfig</code> 초기파라미터</li>
+  <li><code class="language-plaintext highlighter-rouge">ServletContext</code> 초기파라미터</li>
+  <li><code class="language-plaintext highlighter-rouge">java:comp/env</code>로 부터의 JNDI 속성</li>
+  <li>Java 시스템 프라퍼티(<code class="language-plaintext highlighter-rouge">System.getProperties()</code>).</li>
+  <li>운영체제 환경변수</li>
+  <li><code class="language-plaintext highlighter-rouge">random.*</code> 형태의 프라퍼티들만 가지고 있는 <code class="language-plaintext highlighter-rouge">RandomValuePropertySource</code></li>
+  <li>패키지된 jar 파일 외부의 <a href="#heading-244-프로파일-관련-프라퍼티들">프로파일 관련 어플리케이션 프라퍼티들</a>(<code class="language-plaintext highlighter-rouge">application-{profile}.properties</code>와 YAML 문서)</li>
+  <li>패키지된 jar 파일 내부의 <a href="#heading-244-프로파일-관련-프라퍼티들">프로파일 관련 어플리케이션 프라퍼티들</a>(<code class="language-plaintext highlighter-rouge">application-{profile}.properties</code>와 YAML 문서)</li>
+  <li>패키지된 jar 파일 외부의 어플리케이션 프라퍼티들 (<code class="language-plaintext highlighter-rouge">application.properties</code>와 YAML 문서)</li>
+  <li>패키지된 jar 파일 내부의 어플리케이션 프라퍼티들 (<code class="language-plaintext highlighter-rouge">application.properties</code>와 YAML 문서)</li>
+  <li><code class="language-plaintext highlighter-rouge">@Configuration</code>클래스에 선언한 <code class="language-plaintext highlighter-rouge">@PropertySource</code> 어노테이션</li>
+  <li>기본 프라퍼티들 (<code class="language-plaintext highlighter-rouge">SpringApplication.setDefaultProperties</code>를 사용해 작성된)</li>
+</ol>
+
+<p>구체적인 예제를 제공하기 위해, <code class="language-plaintext highlighter-rouge">name</code> 프라퍼티를 사용하는 <code class="language-plaintext highlighter-rouge">@Component</code>를 다음 예제와 같이 개발하고 있다고 가정한다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">org.springframework.stereotype.*</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.beans.factory.annotation.*</span><span class="o">;</span>
+
+<span class="nd">@Component</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">MyBean</span> <span class="o">{</span>
+
+	<span class="nd">@Value</span><span class="o">(</span><span class="s">"${name}"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+
+    <span class="c1">// ...</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>어플리케이션의 클래스패스(jar파일 내)상에 <code class="language-plaintext highlighter-rouge">application.properties</code> 파일이<code class="language-plaintext highlighter-rouge">name</code>에 대한 유용한 기본 프라퍼티 값을 제공할 수있다. 새로운 환경에서 실행될 때, <code class="language-plaintext highlighter-rouge">name</code>을 재정의한 <code class="language-plaintext highlighter-rouge">application.properties</code> 파일이 jar파일 외부에서 제공될 수도 있다. 일회성 테스트를 위해 시작할 때 Command-Line 인수를 이용해 전달 할 수 있다. (예를 들어 <code class="language-plaintext highlighter-rouge">java -jar app.jar --name="Spring"</code>).</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">SPRING_APPLICATION_JSON</code> 프라퍼티는 환경변수로 Command line상에서 제공될 수 있다. 예를 들어 다음 라인을 UNI*X 쉘에서 사용할 수있다.<br />
+<strong> $ SPRING_APPLICATION_JSON='{"acme":{"name":"test"}}' java -jar myapp.jar</strong><br />
+위 예가 실행되면, 스프링 <code class="language-plaintext highlighter-rouge">Environment</code>에서는 <code class="language-plaintext highlighter-rouge">acme.name=test</code>로 된다. JSON을 시스템 프라퍼티에서 <code class="language-plaintext highlighter-rouge">spring.application.json</code>을 사용해 다음 예처럼 제공할 수도 있다.<br />
+<strong> $ java -Dspring.application.json='{"name":"test"}' -jar myapp.jar</strong><br />
+JSON을 Command-line 인수를 사용해 다음 예 처럼 제공할 수도 있다.<br />
+<strong> $ java -jar myapp.jar –spring.application.json='{"name":"test"}'</strong><br />
+다음과 같이 JNDI 변수를 이용해 JSON을 제공을 할 수도 있다. <br />
+<strong> <code class="language-plaintext highlighter-rouge">java:comp/env/spring.application.json</code></strong></p>
+</blockquote>
+
+<h3 id="heading-241-임의의-값들-설정-random-values">24.1 임의의 값들 설정 (Random Values)</h3>
+<p><code class="language-plaintext highlighter-rouge">RandomValuePropertySource</code>는 임의의 값들을 주입할때 유용하다. (예를 들어 비밀값<sub>패스워드같은</sub>또는 테스트 케이스들에 ). 랜덤 값으로 Integer, long, uuid나 스트링 들을 다음 예와 같이 생성한다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>my.secret=${random.value}
+my.number=${random.int}
+my.bignumber=${random.long}
+my.uuid=${random.uuid}
+my.number.less.than.ten=${random.int(10)}
+my.number.in.range=${random.int[1024,65536]}
+</code></pre></div></div>
+<p><code class="language-plaintext highlighter-rouge">random.int*</code> 구문은 <code class="language-plaintext highlighter-rouge">OPEN value (,max) CLOSE</code>이다. <code class="language-plaintext highlighter-rouge">OPEN,CLOSE</code>는 어떤 문자든 올수있고 <code class="language-plaintext highlighter-rouge">value, max</code>는 정수들이다. 만약 <code class="language-plaintext highlighter-rouge">max</code>가 제공되면 <code class="language-plaintext highlighter-rouge">value</code>는 최소값이고 <code class="language-plaintext highlighter-rouge">max</code>는 최대값이된다. (배타적이다)</p>
+
+<h2 id="heading-242-command-line-설정-접근">24.2 Command Line 설정 접근</h2>
+<p>기본적으로 <code class="language-plaintext highlighter-rouge">SpringApplication</code>은 모든 command line 옵션 인수(이 인수들은 '–'로 시작한다. 예를 들어 <code class="language-plaintext highlighter-rouge">--server.port=9000</code>)를 <code class="language-plaintext highlighter-rouge">property</code>로 변환한 뒤 Spring <code class="language-plaintext highlighter-rouge">Environment</code>에 추가한다.</p>
+
+<p>Command line 프라퍼티들이 <code class="language-plaintext highlighter-rouge">Environment</code>에 추가 안되게 하려면 <code class="language-plaintext highlighter-rouge">SpringApplication.setAddCommandLineProperties(false)</code>를 사용해서 비활성화 시킬 수 있다.</p>
+
+<h3 id="heading-243-어플리케이션-프라퍼티-파일들">24.3 어플리케이션 프라퍼티 파일들</h3>
+<p><code class="language-plaintext highlighter-rouge">SpringApplication</code>은 다음 경로에 있는 <code class="language-plaintext highlighter-rouge">application.properties</code> 파일의 프라퍼티들을 가져와서 Spring <code class="language-plaintext highlighter-rouge">Environment</code>에 추가한다.</p>
+<ol>
+  <li>현재 디렉토리의 하위디렉토리인 <code class="language-plaintext highlighter-rouge">/config</code></li>
+  <li>현재 디렉토리</li>
+  <li>클래스패스 상의 <code class="language-plaintext highlighter-rouge">/config</code> 패키지</li>
+  <li>루트 클래스패스</li>
+</ol>
+
+<p>위의 목록은 우선순위 순이다 (목록의 상위에 정의한 프라퍼티들은 하위에 정의한 것을 우선한다.)</p>
+<blockquote>
+  <p>'.properties'를 대신해 <a href="#heading-246-properties-대신-yaml-사용">YAML('.yml')파일을 사용</a>할 수 있다.</p>
+</blockquote>
+
+<p>파일명으로 <code class="language-plaintext highlighter-rouge">application.properties</code>말고 다른 것을 쓰려면 <code class="language-plaintext highlighter-rouge">spring.config.name</code> 환경 설정의 값으로 지정하면된다. 또 <code class="language-plaintext highlighter-rouge">spring.config.location</code> 환경설정을 사용해 명시적으로 위치를 지정할 수 있다. (디렉토리 위치나 파일 경로를 여러개 설정할 경우 구분자로 쉼표를 사용한다.)
+다음 예제는 다른 파일명을 명시하는 방법을 보여준다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java -jar myproject.jar --spring.config.name=myproject
+</code></pre></div></div>
+<p>다음 예제는 두개의 경로를 어떻게 지정하는지 보여준다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ java -jar myproject.jar --spring.config.location=classpath:/default.properties,classpath:/override.properties
+</code></pre></div></div>
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">spring.config.name</code>과 `spring.config.location'은 어떤 파일들을 로드할지 결정해야 하기 때문에 일찍 사용된다. 그래서 환경 설정<sub>Property</sub>으로 정의해야만 한다. (일반적으로 OS 환경변수, 시스템 프라퍼티 또는 Command line 인수)</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">spring.config.location</code>가 디렉토리들(파일의 반대의 의미로)을 지정하면 <code class="language-plaintext highlighter-rouge">/</code>로 끝나도록 해야 한다. (그렇게 실행하면 로딩전에 프로필-관련 파일이름을 포함한 <code class="language-plaintext highlighter-rouge">spring.config.name</code>의 파일명이 뒤에 붙는다.) <code class="language-plaintext highlighter-rouge">spring.config.location</code>에 명시한 파일명은 프로파일 관련 변경 지원 없이 그대로 사용하고 모든 프로파일 관련 프라퍼티들을 덮어쓴다.</p>
+
+<p>설정 위치는 작성된 역순으로 찾는다. 기본적인 설정 위치는 <code class="language-plaintext highlighter-rouge">classpath:/, classpath:/config/, file:./, file:./config/</code> 이다. 검색 순서 결과는 다음과 같다.</p>
+<ol>
+  <li>file:./config/</li>
+  <li>file:./</li>
+  <li>classpath:/config/</li>
+  <li>classpath:/</li>
+</ol>
+
+<p><code class="language-plaintext highlighter-rouge">spring.config.location</code>을 사용해 사용자 정의 위치를 설정하면 그 설정이 기본 위치를 대신한다. 예를 들어 <code class="language-plaintext highlighter-rouge">spring.config.location</code>에 <code class="language-plaintext highlighter-rouge">classpath:/custom-config/,file:./custom-config/</code>을 설정하면, 검색 순서는 다음과 같다.</p>
+<ol>
+  <li>file:./custom-config/</li>
+  <li>classpath:custom-config/</li>
+</ol>
+
+<p><code class="language-plaintext highlighter-rouge">spring.config.additional-location</code>을 사용해 사용자정의 설정 위치를 지정하면, 기본 위치에 추가되어 사용된다. 추가 위치는 기본 위치 전에 검색된다. 예를 들어 <code class="language-plaintext highlighter-rouge">classpath:/custom-config/,file:./custom-config/</code>을 추가 위치로 설정하면, 검색 순서는 다음과 같다.</p>
+<ol>
+  <li>file:./custom-config/</li>
+  <li>classpath:custom-config/</li>
+  <li>file:./config/</li>
+  <li>file:./</li>
+  <li>classpath:/config/</li>
+  <li>classpath:/</li>
+</ol>
+
+<p>이 검색순서를 이용하면 하나의 설정파일에 기본 설정 값들을 명시해서 선택적으로 다른 값으로 대체할 수 있다. 어플리케이션을 위한 기본값들은 기본 경로중 한 곳에 있는 <code class="language-plaintext highlighter-rouge">application.properties</code>파일(또는 <code class="language-plaintext highlighter-rouge">spring.config.name</code>으로 선택한 다른 기반이름<sub>basename</sub>)로 제공할 수있다. 이 기본값들은 실행시 사용자정의 경로 중 하나에 있는 다른 파일로 대체될 수 있다.</p>
+
+<blockquote>
+  <p>시스템 프라퍼티 말고 환경변수를 사용하는 경우, 대부분의 운영체제는 키 이름을 <code class="language-plaintext highlighter-rouge">.</code>으로 구분하는 것을 허용하지 않는다. 그래서 <code class="language-plaintext highlighter-rouge">.</code> 대신 <code class="language-plaintext highlighter-rouge">_</code>을 사용한다. (예를 들어 <code class="language-plaintext highlighter-rouge">spring.config.name</code>은 대신 <code class="language-plaintext highlighter-rouge">SPRING_CONFIG_NAME</code>으로 한다.</p>
+</blockquote>
+
+<blockquote>
+  <p>만약 어플리케이션이 컨테이너에서 실행된다면 jndi 프라퍼티(<code class="language-plaintext highlighter-rouge">java:comp/env</code> 안의)나 Servlet Context 초기파라미터가 환경변수나 시스템 프라퍼티 대신(또는 뿐만 아니라) 사용될 수 있다.</p>
+</blockquote>
+
+<h3 id="heading-244-프로파일-관련-프라퍼티들">24.4 프로파일 관련 프라퍼티들</h3>
+<p><code class="language-plaintext highlighter-rouge">application.properties</code> 파일에 더해서 프로파일 관련 프라퍼티들을 <code class="language-plaintext highlighter-rouge">application-{profile}.properties</code> 이름 관례를 사용해 정의할 수있다. <code class="language-plaintext highlighter-rouge">Environment</code>는 프로파일들이 설정되 있지 않은 경우 사용할 기본 프로파일들을(기본적으로 <code class="language-plaintext highlighter-rouge">[default]</code>) 가지고 있다. 프로파일들이 명시적으로 활성화 되있지 않으면 <code class="language-plaintext highlighter-rouge">application-default.properties</code>가 읽어들여 진다. 프로파일 관련 프라퍼티들은 표준 <code class="language-plaintext highlighter-rouge">application.properties</code>와 같은 위치로 부터 읽혀진다. 프로파일 관련 파일들이 package.jar 안에 있던 밖에 있던 프로파일 관련 아닌<sub>non-specific</sub><sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> 파일들의 설정보다 항상 우선한다.</p>
+
+<p>프로파일 관련 파일들이 여러 개일 경우 마지막 것이 이기는 전략이 적용된다.<sub>last-wins strategy</sub> 예를 들어 <code class="language-plaintext highlighter-rouge">spring.profiles.active</code> 프라퍼티에 의해 명시된 프로피일들은 <code class="language-plaintext highlighter-rouge">SpringApplication</code> API를 통해 설정된 것 뒤에 추가 되어서 우선권을 얻는다.</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">spring.config.location</code>에 어떤 파일이라도 기술했다면 그 파일들중 프로파일 관련 것들은 대상이 되지 않는다. 프로파일 관련 프라퍼티들도 같이 사용하려면 <code class="language-plaintext highlighter-rouge">spring.config.location</code>에 디렉토리를 사용해야 한다.</p>
+</blockquote>
+
+<h3 id="heading-245-프라퍼티들에서-플레이스홀더들">24.5 프라퍼티들에서 플레이스홀더들</h3>
+<p><code class="language-plaintext highlighter-rouge">application.properties</code> 에 설정된 값들은 사용될 때 <code class="language-plaintext highlighter-rouge">Environment</code>로 들어간다. 그래서 전에 정의한 값들을 참조할 수있다. (예를 들어 시스템 프라퍼티들로 부터)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>app.name=My App
+app.description=${app.name} is a Spring Boot application
+</code></pre></div></div>
+<blockquote>
+  <p>이 기술은 이미 있는 Spring Boot 프라퍼티들의 이름을 짧게 만드는데 사용할 수있다. 자세한 것은 <a href="http://localhost:4000/blog/2017/12/19/spring-boot-chapter09/#heading-734-짧은-command-line-인수들-사용하기">73.4 "'짧은' Command Line 인수들 사용하기</a>를 보시오.</p>
+</blockquote>
+
+<h3 id="heading-246-properties-대신-yaml-사용">24.6 Properties 대신 YAML 사용</h3>
+<p><a href="http://yaml.org/">YAML</a> 은</p>
+<h3 id="heading-2461">24.6.1</h3>
+
+<h3 id="heading-247-type-safe-설정-프라퍼티들">24.7 Type-safe 설정 프라퍼티들</h3>
+
+<h3 id="heading-264-로그레벨들">26.4 로그레벨들</h3>
+
+<h4 id="heading-2719-템플릿-엔진들">27.1.9 템플릿 엔진들</h4>
+
+<h3 id="heading-464-사용자-정의-스타터-만들기">46.4 사용자 정의 스타터 만들기</h3>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>부모/자식 관계의 여러 Context들을 사용하는 방식. 자식 Context는 부모 Context의 설정을 상속받아 사용할 수 있다. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>객체를 생성할 때 Builder의 메소드들을 이용해 만들려는 instance의 속성 값을 설정하고 instance 생성메소드를 통해 instance를 만드는 방식. <br />예) <code class="language-plaintext highlighter-rouge">Instance inst = builder.setAttr1(attr1).setAttr2(attr2).setAttr3(attr3).build();</code> (역자주) <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>application-myprofile.properties에 설정한 내용이 application.properties에 설정 된 것 보다 우선한다. <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

@@ -1,0 +1,58 @@
+I"�<p><a href="http://www.h2database.com/html/quickstart.html">원문</a></p>
+
+<h2 id="heading-h2-디비를-어플리케이션에-내장해서-사용하기">H2 디비를 어플리케이션에 내장해서 사용하기</h2>
+
+<p>이 데이터베이스는 내장형 모드와 서버 모드로 사용할 수 있다. 내장형 모드로 사용하기 위해서는 다음이 필요하다.</p>
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">h2*.jar</code> 파일이 클래스패스에 추가되어야 한다. (H2는 다른 라이브러리를 의존하지 않는다.)</li>
+  <li>JDBC Driver 클래스로 <code class="language-plaintext highlighter-rouge">org.h2.Driver</code>를 사용한다.</li>
+  <li>Database URL <code class="language-plaintext highlighter-rouge">jdbc:h2:~/test</code> 는 사용자 홈 디렉토리의 <code class="language-plaintext highlighter-rouge">test</code> 데이터베이스와 연결한다.</li>
+  <li>새 데이터베이스는 자동으로 생성된다.</li>
+</ol>
+
+<h2 id="heading-h2-콘솔-어플리케이션">H2 콘솔 어플리케이션</h2>
+<p>콘솔은 브라우저 사용해 데이터베이스에 연결해 SQL문을 실행하게 해준다.
+<img src="/assets/img/h2/h2-console.png" alt="h2-console" /></p>
+
+<h3 id="heading-순서대로-해보기">순서대로 해보기</h3>
+<h4 id="heading-설치">설치</h4>
+<p>windows installer를 사용해 소프트웨어를 설치한다. (아직 설치 하지 않았다면) <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup></p>
+
+<h4 id="heading-콘솔-시작하기">콘솔 시작하기</h4>
+<p>윈도우즈의 [시작]-[모든 프로그램]-[H2]-[H2 Console(command line)]을 클릭한다.<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>
+<img src="/assets/img/h2/quickstart-1.png" alt="H2 Console실행" /></p>
+
+<p>콘솔창이 나타난다.</p>
+
+<p><img src="/assets/img/h2/quickstart-2.png" alt="H2 Console window" /></p>
+
+<p>웹 브라우저에서 <code class="language-plaintext highlighter-rouge">http://localhost:8082</code> URL을 연다. 방화벽으로부터 보안 경고가 보일 수도있다. 만약에 네트워크를 이용해 다른 컴퓨터가 데이터베이스에 접근하지 못하게 하려면 방화벽에서 이 연결을 막으면 된다. 이번 설명에는 로컬 연결만 설명할 것이다.</p>
+
+<h3 id="heading-로그인">로그인</h3>
+<p>[Generic H2]를 선택하고 [Connect]를 클릭한다.</p>
+
+<p><img src="/assets/img/h2/quickstart-3.png" alt="H2 Console 로그인" /></p>
+
+<p>각 항목들을 입력하고 [연결]을 클릭하면 로그인 된다. 그럼 다음과 같은 화면이 나온다.</p>
+
+<p><img src="/assets/img/h2/quickstart-4.png" alt="H2 Console 로그인" /></p>
+
+<p>SQL 창에 sql문을 작성하고 실행 버튼을 클릭하면 SQL문이 실행된다.</p>
+
+<h3 id="heading-연결-끊기">연결 끊기</h3>
+
+<p><img src="/assets/img/h2/quickstart-5.png" alt="H2 Console 로그인" /></p>
+
+<p>위 그림에 표시된 버튼(상단 왼쪽)을 클릭한다.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>인스톨러 버전과 플랫폼 독립적인 압축버전이 있다. <a href="http://www.h2database.com/html/download.html">다운로드페이지.</a> 압축버전은 압축을 풀기만 하면된다. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>플랫폼 독립적인 압축버전인 경우 설치경로/bin 디렉토리의 h2.bat (리눅스는 h2.sh)를 실행한다. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

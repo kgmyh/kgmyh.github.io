@@ -1,0 +1,96 @@
+I"%<p>버전 : 2.0.0.M7
+저자: 
+Phillip Webb, Dave Syer, Josh Long, Stéphane Nicoll, Rob Winch, Andy Wilkinson, Marcel Overdijk, Christian Dupuis, Sébastien Deleuze, Michael Simons, Vedran Pavić, Jay Bryant
+번역: 김성환</p>
+
+<p><strong>Copyright ⓒ 2012-2017</strong>
+Copies of this document may be made for your own use and for distribution to others, provided that you do not charge any fee for such copies and further provided that each copy contains this Copyright Notice, whether distributed in print or electronically.</p>
+
+<p><a href="https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#boot-documentation">원본</a></p>
+
+<ul class="toc" id="markdown-toc">
+  <li><a href="#heading-part-1-spring-boot-문서" id="markdown-toc-heading-part-1-spring-boot-문서">Part 1. Spring Boot 문서</a>    <ul>
+      <li><a href="#heading-1-이-문서에-대해서" id="markdown-toc-heading-1-이-문서에-대해서">1. 이 문서에 대해서</a></li>
+      <li><a href="#heading-2-도움-받기" id="markdown-toc-heading-2-도움-받기">2. 도움 받기</a></li>
+      <li><a href="#heading-3첫번째-단계" id="markdown-toc-heading-3첫번째-단계">3.첫번째 단계</a></li>
+      <li><a href="#heading-4-스프링부트로-작업하기" id="markdown-toc-heading-4-스프링부트로-작업하기">4. 스프링부트로 작업하기</a></li>
+      <li><a href="#heading-5-스프링부트의-특징에-대해-배우기" id="markdown-toc-heading-5-스프링부트의-특징에-대해-배우기">5. 스프링부트의 특징에 대해 배우기</a></li>
+      <li><a href="#heading-6-제품화하기" id="markdown-toc-heading-6-제품화하기">6. 제품화하기</a></li>
+      <li><a href="#heading-7-고급-주제들" id="markdown-toc-heading-7-고급-주제들">7. 고급 주제들</a></li>
+    </ul>
+  </li>
+</ul>
+<h1 id="heading-part-1-spring-boot-문서">Part 1. Spring Boot 문서</h1>
+
+<p>이번 장은 스프링 부트 참조 문서에 대한 간단히 개요를 제공한다. 이 문서의 나머지부분에 대한 가이드가 될 것이다.</p>
+
+<h2 id="heading-1-이-문서에-대해서">1. 이 문서에 대해서</h2>
+<p>스프링 부트 참조가이드는 다음 세 형태로 제공된다.</p>
+<ul>
+  <li><a href="https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/html/">HTML</a></li>
+  <li><a href="https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/pdf/spring-boot-reference.pdf">PDF</a></li>
+  <li><a href="https://docs.spring.io/spring-boot/docs/2.0.0.BUILD-SNAPSHOT/reference/epub/spring-boot-reference.epub">EPUB</a>
+이 문서의 최종본은 <a href="https://docs.spring.io/spring-boot/docs/current/reference/">docs.spring.io/spring-boot/docs/current/reference</a>에 위치한다.</li>
+</ul>
+
+<p>이 문서의 저작권은 개인 소유로 사용하거나 다른 사람들에게 돈을 받지 않고 배포 할 수 있다. 그리고 프린트나 파일로 배포시 이 저작권 공고가 담겨져 있어야 한다.</p>
+
+<h2 id="heading-2-도움-받기">2. 도움 받기</h2>
+<p>만약 스프링 부트로 개발시 문제가 생기는 경우 다음과 항목들을 참고 하시오.</p>
+<ul>
+  <li><a href="https://docs.spring.io/spring-boot/docs/current-SNAPSHOT/reference/htmlsingle/#howto">How-to documents</a> 를 보시오. 일반적으로 많이 나오는 질문들에 대한 해결책을 제공한다.</li>
+  <li>스프링 기본을 배우시오. 스프링부트는 스프링의 다른 프로젝트들을 빌드한다.<a href="https://spring.io/">spring.io</a> 웹사이트의 풍부한 참조 문서들을 확인하시오. 만약 스프링을 처음 접하였다면 <a href="https://spring.io/guides">가이드</a>의 문서를 공부해 보시오.</li>
+  <li>질문하시오. 우리는 <a href="https://stackoverflow.com/">스택오버플로우</a> 사이트의 <a href="https://stackoverflow.com/tags/spring-boot"><code class="language-plaintext highlighter-rouge">spring-boot</code></a> 태그가 붙은 질문들을 수시로 모니터링 하고 있다.</li>
+  <li><a href="https://github.com/spring-projects/spring-boot/issues">스프링부트 github 이슈</a>에 스프링부트 관련 버그를 올려주시오.</li>
+</ul>
+
+<blockquote>
+  <p>스프링부트는 이 문서를 포함해 모두 오픈소스이다. 만약 당신이 이 문서에서 오류를 발견하거나 개선에 참여하고 싶으면 <a href="https://github.com/spring-projects/spring-boot/tree/master">참여</a> 해 주시오.</p>
+</blockquote>
+
+<h2 id="heading-3첫번째-단계">3.첫번째 단계</h2>
+<p>당신이 스프링부트나 '스프링'을 처음 시작한다면 다음 주제를 따라 시작하시오.</p>
+<ul>
+  <li>간단한 것 부터 : <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-8-스프링부트-소개">개요</a> | <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-9-시스템-요구사항">요구사항</a> | <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-10-스프링부트-설치install">설치</a></li>
+  <li>튜토리얼: <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-11-첫번째-스프링부트-어플리케이션-개발하기">Part1</a> | <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-113-코드-작성하기">Part2</a></li>
+  <li>당신의 예제를 실행하기: <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-114-예제-실행하기">Part1</a> | <a href="/blog/2017/12/04/spring-boot-chapter02/#heading-115-실행가능-jar-생성하기">Part2</a></li>
+</ul>
+
+<h2 id="heading-4-스프링부트로-작업하기">4. 스프링부트로 작업하기</h2>
+<p>진짜 스프링부트를 시작할 준비가 되었나? 이 문서는 다음과 같은 항목의 내용을 제공할 것이다.</p>
+<ul>
+  <li>빌드 시스템: <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-132-메이븐-maven">메이븐</a> |<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-133-그래이들-gradle">그래이들</a> |<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-134-앤트-ant">앤트</a> |<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-135-스타터-들starters">스타터들</a></li>
+  <li>모범 사례: <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-14-코드-구조">코드구조</a> | <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-15-설정-클래스-configuration-classes">@Configuration</a> | <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-16-자동-설정-auto-configuration">@EnableAutoConfiguration</a> | <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-17-스프링-빈들과-의존관계-주입">빈들과 의존관계 주입</a></li>
+  <li>코드 실행하기: <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-191-ide에서-실행하기">IDE</a>|<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-192-패키지화한-어플리케이션으로-실행하기">패키징</a>|<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-193-메이븐-플러그인-사용하기">메이븐</a>|<a href="/blog/2017/12/04/spring-boot-chapter03/#heading-194-그래이들-플러그인-사용하기">그래이들</a></li>
+  <li>어플리케이션 패키징하기: <a href="/blog/2017/12/04/spring-boot-chapter03/#heading-21-제품으로-어플리케이션-패키징하기">Jar로 제품화</a></li>
+  <li>Spring Boot CLI: <a href="#heading-part7-스프링부트-cli">CLI사용하기</a></li>
+</ul>
+
+<h2 id="heading-5-스프링부트의-특징에-대해-배우기">5. 스프링부트의 특징에 대해 배우기</h2>
+<p>스프링부트의 핵심기능에 대한 더 많은 상세사항을 필요한가? <a href="#">이어지는 항목들에서 다룰 것이다.</a></p>
+<ul>
+  <li>핵심특징: <a href="/blog/2017/12/10/spring-boot-chapter04/#heading-23-springapplication">스프링어플리케이션</a> |<a href="/blog/2017/12/10/spring-boot-chapter04/#heading-24-외부설정">외부설정</a> |<a href="#">프로파일스</a> |<a href="#">기록남기기-logging</a>|</li>
+  <li>웹 어플리케이션: <a href="#">MVC</a> |<a href="#">내장 컨테이너들</a></li>
+  <li>데이터관련 작업 : <a href="#">SQL</a> |<a href="#">NO-SQL</a></li>
+  <li>메세징: <a href="#">개요</a> |<a href="#">JMS</a></li>
+  <li>테스팅: <a href="#">개요</a> |<a href="#">부트 어플리케이션</a> |<a href="#">유틸들</a></li>
+  <li>확장: <a href="#">자동 설정</a> |<a href="#">@Conditions</a></li>
+</ul>
+
+<h2 id="heading-6-제품화하기">6. 제품화하기</h2>
+<p>스프링부트 어플리케이션을 제품화 하기 위한 <a href="#">좋은 기능</a>을 제공한다.</p>
+<ul>
+  <li>끝점(endpoint)들 관리: <a href="#">개요</a> | <a href="#">사용자정의</a></li>
+  <li>연결 옵션들: <a href="#">HTTP</a> | <a href="#">JMS</a></li>
+  <li>모니터링: <a href="#">메트릭스</a> | <a href="#">감사(Auditing)</a> |<a href="#">실행추적(Tracing)</a> |<a href="#">진행</a></li>
+</ul>
+
+<h2 id="heading-7-고급-주제들">7. 고급 주제들</h2>
+<p>마지막으로 상급 사용자들을 위한 몇몇 토픽이 있다.</p>
+<ul>
+  <li>스프링부트 어플리케이션 개발: <a href="#">클라우드 개발</a> | <a href="#">OS 서비스</a></li>
+  <li>빌드툴 플러그인들: <a href="#">메이븐</a> | <a href="#">그래이들</a></li>
+  <li>부록: <a href="#">어플리케이션 설정들</a> | <a href="#">자동설정 클래스들</a> | <a href="#">실행할수 있는 Jar</a></li>
+</ul>
+
+:ET

@@ -3,11 +3,11 @@
 encoding: UTF-8
 
 #site 데이터
-title: kgmyh tutorial blog   #블로그 타이틀
-description: Java, Python 튜토리얼 번역   #블로그설명
+title: kgmyh Tutorial   #블로그 타이틀
+description: Python,인공지능,Java   #블로그설명
 url: https://kgmyh.github.io    #기본(base) URL
 baseurl: ""
-keywords: 'java,python,spring,web,javascript,blog'
+keywords: 'python,machine learning,deeplearning,AI,java,spring,web,javascript,blog'
 author:
   name: 김성환
   job_title: Instructor
