@@ -6,7 +6,7 @@ author: 김성환
 categories: [Jekyll]
 tags: [Jekyll, Sass]
 comment: true
-published: False
+published: false
 ---
 지킬을 이용해 블로그를 만드는 재미에 빠져 있다. 그런데 계속 아쉬운 것이 css를 이용해 style을 적용하는 것이다. 내용이 중요한데 어느 순간 보면 css 수정하고 있다. 사실 지킬을 접한지 얼마 안되 초보자이고 css에도 초보자이다 보니 테마에서 제공한 css를 조금씩 바꾸는 정도로 만족하고 있었다. 그러나 만족이 안된다. ㅜ..ㅜ 그래서 이것 저것 찾다 보니 sass 란 것이 있다는 것을 알게 되어 이것을 지킬에 어떻게 적용하는지 찾아보게되었다. 
 
