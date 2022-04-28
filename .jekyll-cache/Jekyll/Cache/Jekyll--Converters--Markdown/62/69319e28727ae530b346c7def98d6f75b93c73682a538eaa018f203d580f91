@@ -1,0 +1,4 @@
+I"�<p>장고 프로젝트 root 경로에 의존성 문서를 만든다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip freeze &gt; requirements.txt   
+</code></pre></div></div>
+:ET

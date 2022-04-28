@@ -1,0 +1,249 @@
+I" *<p>장고 프로젝트 root 경로에 의존성 문서를 만든다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip freeze &gt; requirements.txt   
+</code></pre></div></div>
+
+<h1 id="heading-필요-모듈-설치">필요 모듈 설치</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get update
+<span class="nb">sudo </span>apt-get upgrade
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>build-essential
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>python3    
+<span class="nb">sudo </span>apt-get <span class="nb">install </span>python3-pip
+</code></pre></div></div>
+
+<h1 id="heading-project-directory-만들기">project directory 만들기</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mkdir </span>project 
+<span class="nb">cd </span>project 
+</code></pre></div></div>
+
+<h1 id="heading-git-hub-장고-프로젝트-clone-받기">git hub 장고 프로젝트 clone 받기</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone url
+</code></pre></div></div>
+
+<h1 id="heading-가상환경-생성-및-라이브러리-설치">가상환경 생성 및 라이브러리 설치</h1>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>virtualenv
+virtualenv <span class="nt">-p</span> python3 venv
+<span class="nb">source </span>venv/bin/activate  <span class="o">(</span>활성화<span class="o">)</span>
+
+pip <span class="nb">install</span> <span class="nt">-r</span> django-board/requirements.txt
+</code></pre></div></div>
+
+<h1 id="heading-django-개발서버로-실행">Django 개발서버로 실행</h1>
+<ul>
+  <li>여기 까지 하면 개발 서버로 실행 가능</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>python manage.py runser 0.0.0.0:8000
+</code></pre></div></div>
+
+<h1 id="heading-nginx--gunicon구니콘-wsgi-설치">nginx + gunicon(구니콘-wsgi) 설치</h1>
+
+<h2 id="heading-gunicon-설치">gunicon 설치</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>pip <span class="nb">install </span>gunicorn
+</code></pre></div></div>
+
+<ul>
+  <li>gunicon 테스트
+    <ul>
+      <li>project root 경로에서(django-board/) 아래 명령어 실행</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn <span class="nt">--bind</span> 0:8000 config.wsgi:application
+</code></pre></div></div>
+
+<ul>
+  <li>옵션설명
+    <ul>
+      <li>–bind: 포트</li>
+      <li>config.wsgi:application : wsgi와 연결된 wsgi application은 config/wsgi.py 파일에 설정된 application이란 의미</li>
+      <li>웹프라우져에서 ip:8000 으로 접속해본다. (web서버와 연결이 안되 이미지 등은 안나온다.) wsgi는 장고 동적 부분만 실행하고 정적파일은 처리 안해서 읽지 못한다.)</li>
+    </ul>
+  </li>
+  <li>web browser에서 http://ip:8000 으로 접속 테스트</li>
+</ul>
+
+<h2 id="heading-gunicon-을-port-대신-unix-socket을-이용">Gunicon 을 port 대신 unix socket을 이용</h2>
+<ul>
+  <li>Gunicorn은 nginx 와 연결할 것이므로 속도가 더빠른 소켓연동을 한다.</li>
+  <li>다음 명령어로 실행</li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gunicorn <span class="nt">--bind</span> unix:/tmp/gunicorn.sock config.wsgi:application
+	- <span class="nb">bind </span>옵션부분이 바뀜
+	- unix 소켓방식으로 실행하면 gunicon 서버를 단독서버로 실행할 수 없다. nginx와 연결해서 외부에서 호출하게 한다.
+	- 여기선 되는지만 확인하자. 
+</code></pre></div></div>
+
+<ul>
+  <li>Gunicon을 리눅스 service로 등록
+    <ul>
+      <li>서버 시작할 때 gunicon을 자동으로 실행되도록 service로 등록한다.</li>
+      <li>서비스로 등록하려면 환경변수파일과 서비스 파일을 작성해야한다.</li>
+      <li>환경변수 파일 등록
+        <ul>
+          <li>환경변수에 DJANGO_SETTINGS_MODULE 환경변수 등록해야함.</li>
+          <li>특정 경로에 환경설정파일을 작성할 파일을 생성하고 다음을 작성한다.(ex:django-board.env)
+            <ul>
+              <li>ex) /home/ubuntu/project/django-board.env
+                <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nv">DJANGO_SETTINGS_MODULE</span><span class="o">=</span>config.settings
+</code></pre></div>                </div>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li>서비스 파일 생성 및 작성
+        <ul>
+          <li>/etc/systemd/system 디렉토리에 서비스 설정파일 생성
+            <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nb">cd</span> /etc/systemd/system
+  <span class="nb">sudo </span>vi django-board.service
+</code></pre></div>            </div>
+          </li>
+        </ul>
+      </li>
+      <li>다음 내용을 넣는다.</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [Unit]
+  Description=gunicorn daemon
+  After=network.target
+
+  [Service]
+  User=ubuntu
+  Group=www-data
+  WorkingDirectory=[프로젝트 경로]
+  ExecStart=[gunicorn 설치 경로] --workers 3 --bind 0.0.0.0:8000 [장고앱설정패키지명].wsgi:application
+
+  [Install]
+  WantedBy=multi-user.target
+</code></pre></div>    </div>
+    <ul>
+      <li>예)</li>
+    </ul>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  [Unit]
+  Description=gunicorn daemon
+  After=network.target
+
+  [Service]
+  User=ubuntu
+  Group=ubuntu
+  WorkingDirectory=/home/ubuntu/project/django-board
+  EnvironmentFile=/home/ubuntu/project/django-board.env
+  ExecStart=/home/ubuntu/project/venv/bin/gunicorn --workers 2 --bind unix:/tmp/gunicorn.sock config.wsgi:application
+
+  [Install]
+  WantedBy=multi-user.target
+</code></pre></div>    </div>
+    <ul>
+      <li>WorkingDirectory: 장고 프로젝트 경로</li>
+      <li>EnvironmentFile: 환경변수 파일 경로</li>
+      <li>ExecStart: gunicon 실행 프로그램(윈도우라면 exe) - 가상환경/bin 아래 있다.
+        <ul>
+          <li>–workers : 프로세스 몇개 사용하는지.</li>
+          <li>ExecStart에는 gunicorn 모듈이 설치된 경로를 지정한다.</li>
+        </ul>
+      </li>
+      <li>서비스 등록</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl start django-board.service
+<span class="nb">sudo </span>systemctl <span class="nb">enable </span>django-board.service   <span class="c">#등록 </span>
+<span class="nb">sudo </span>systemctl status django-board   <span class="c">#상태확인</span>
+</code></pre></div></div>
+
+<h1 id="heading-nginx-설치-및-설정">Nginx 설치 및 설정</h1>
+
+<h2 id="heading-설치">설치</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo apt-get install nginx
+</code></pre></div></div>
+
+<h2 id="heading-설정">설정</h2>
+<ul>
+  <li>/etc/nginx/sites-available (Nginx 설정파일들 모아논 dir) 디렉토리로 이동
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd /etc/nginx/sites-available
+</code></pre></div>    </div>
+  </li>
+  <li>설정파일을 생성한 뒤 아래 내용을 넣는다.</li>
+</ul>
+
+<p>sudo vi 파일명 (sudo vi django-board)</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+        listen 80;
+        server_name {접속할 IP주소-ec2 public ip주소};
+
+        # location = /favicon.ico { access_log off; log_not_found off; }
+
+        location /static {
+                alias {장고프로젝트 static 경로};
+        }
+		
+		location /media {
+                alias {장고프로젝트 media 경로};
+        }
+		
+        location / {
+                include proxy_params;
+                proxy_pass http://unix:/tmp/gunicorn.sock;
+        }
+}
+
+- location /static, location /media
+	- url/static 또는 url/media url경로로 들어온 요청은 Nginx가 지정한 경로의 파일을 읽어서 처리한다. 장고프로젝트 static 파일 디렉토리를 지정한다.
+- location / 
+	- /static 이외의 모든 요청은 gunicorn으로 처리하도록 설정한다.
+	- prox_pass는 동적 요청이 발생하면 그 요청을 gunicon의 유닉스 소켓으로 보내란 설정.
+
+
+</code></pre></div></div>
+<ul>
+  <li>예
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>server {
+      listen 80;
+      server_name 3.36.62.94;
+
+      location /static {
+          alias /home/ubuntu/project/django-board/static;
+      }
+
+      location /media {
+          alias /home/ubuntu/project/django-board/media;
+      }
+      location / {
+          include proxy_params;
+          proxy_pass http://unix:/tmp/gunicorn.sock;
+      }
+}
+</code></pre></div>    </div>
+    <p>– 주의</p>
+    <ul>
+      <li>static, media 경로 에 /로 끝나면 안된다. (location /media/ /로 끝나면안됨. location /media )</li>
+      <li>끝에 ";" 빼먹으면 안된다.</li>
+    </ul>
+  </li>
+  <li>/etc/nginx/site-enabled 에 symbolic 링크를 추가한다. (default는 제거)
+    <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd</span> /etc/nginx/sites-enabled
+<span class="nb">sudo rm </span>default
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /etc/nginx/sites-available/파일명 
+<span class="nb">sudo ln</span> <span class="nt">-s</span> /etc/nginx/sites-available/django-board
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h2 id="heading-nginx-서비스-리스타트-서비스로-등록되-자동으로-실행됨">Nginx 서비스 리스타트 (서비스로 등록되 자동으로 실행됨)</h2>
+<p>sudo systemctl restart nginx</p>
+
+<ul>
+  <li>웹브라우저에서 http://ip 로 요청한다.</li>
+</ul>
+
+<h1 id="heading-참고">참고</h1>
+<ul>
+  <li>실행중인 서비스 확인 
+service –status-all</li>
+</ul>
+:ET
